@@ -10,11 +10,11 @@ import slugify from 'slugify'
 function ClientNav() {
   const navElements = [
     'Home',
-    'Campaigns',
-    'Gallery',
-    'Certificates',
     'About Us',
-    'Contact Us',
+    'Products',
+    // 'Certificates',
+    // 'About',
+    'Contact',
   ]
   const currentRoute = usePathname().split('/')[2]
   const [path, setPath] = useState('')
@@ -40,11 +40,18 @@ function ClientNav() {
         <Link href="/client">
           <div className=" rounded-full h-12 w-12 flex items-center justify-center hover:scale-110 transition-all ease-in-out">
             <Image
-              src="/images/logo-image.jpg"
+              src="/images/logo-image-light.jpg"
               alt="Desi Manwar Logo"
               width={50}
               height={50}
-              className="w-full h-full rounded-full"
+              className="hidden dark:block w-full h-full rounded-full"
+            />
+            <Image
+              src="/images/logo-image-dark.png"
+              alt="Desi Manwar Logo"
+              width={50}
+              height={50}
+              className="dark:hidden w-full h-full rounded-full"
             />
           </div>
         </Link>
@@ -55,7 +62,7 @@ function ClientNav() {
           <MenuIcon />
         </div>
         <div
-          className={`flex place-items-center place-content-center m-auto mr-0 bg-primary-base dark:bg-secondary-dark h-[100vh] top-0 w-full absolute flex-col lg:flex-row lg:relative lg:dark:bg-secondary-dark lg:h-12 lg:w-[40.1vw] transition-all ease-in-out ${
+          className={`flex items-center justify-center lg:justify-end m-auto mr-0 bg-primary-base dark:bg-secondary-dark h-[100vh] top-0 w-full absolute flex-col lg:flex-row lg:relative lg:dark:bg-secondary-dark lg:h-12 lg:w-[40.1vw] transition-all ease-in-out ${
             isNavbarOpen ? 'left-0' : '-left-[100%] lg:left-0'
           }`}
         >

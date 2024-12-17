@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import ClientNav from './ClientNav'
-import { Copyright } from 'lucide-react'
+import { ArrowRight, Copyright } from 'lucide-react'
 import Button from '@/components/Button'
 
 function RootLayout({ children }) {
@@ -22,7 +22,7 @@ function RootLayout({ children }) {
         </div>
         <div className="m-auto mr-0">
           <Link href="#newsletter">
-            <Button text="Subscribe" outline={false} />
+            <Button text="Get a Quote" outline={false} />
           </Link>
         </div>
       </div>
