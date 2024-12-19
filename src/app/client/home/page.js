@@ -6,7 +6,6 @@ import OurProducts from './OurProducts'
 import WhyUs from './WhyUs'
 import OurMembers from './OurMembers'
 import Testimonials from './Testimonials'
-import Footer from './Footer'
 
 const points = [
   {
@@ -79,7 +78,6 @@ function HomePage() {
       <WhyUs />
       <OurMembers />
       <Testimonials />
-      <Footer />
     </div>
   )
 }

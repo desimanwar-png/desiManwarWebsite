@@ -15,7 +15,7 @@ import Link from 'next/link'
 
 function Footer() {
   return (
-    <footer className="bg-secondary-dark text-primary-base py-10 px-4">
+    <footer className="bg-secondary-dark text-primary-base py-10 px-4 shadow-lg">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Address Section */}
         <div>

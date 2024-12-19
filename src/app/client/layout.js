@@ -3,6 +3,7 @@ import React from 'react'
 import ClientNav from './ClientNav'
 import { ArrowRight, Copyright } from 'lucide-react'
 import Button from '@/components/Button'
+import Footer from './Footer'
 
 function RootLayout({ children }) {
   return (
@@ -28,7 +29,7 @@ function RootLayout({ children }) {
       </div>
       <ClientNav />
       {children}
-      {/* <Footer /> */}
+      <Footer />
       <div className="flex flex-col lg:flex-row items-center justify-center text-secondary-dark dark:text-primary-base p-4 font-semibold tracking-wide bg-white dark:bg-primary-dark ">
         <div className="flex">
           <span className="px-1 flex items-center">
