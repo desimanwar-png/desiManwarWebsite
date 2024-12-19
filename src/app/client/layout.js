@@ -7,7 +7,7 @@ import Button from '@/components/Button'
 function RootLayout({ children }) {
   return (
     <div>
-      <div className="h-16 flex place-content-center tracking-wider font-bold px-4 lg:px-20">
+      <div className="h-16 flex place-content-center tracking-wider font-bold px-4 lg:px-20 z-50">
         <div className="flex place-items-center text-primary-dark ">
           <Link href="tel:+918290445443">
             <div className="mr-8 hover:text-black hover:dark:text-primary-base cursor-pointer">
@@ -21,7 +21,7 @@ function RootLayout({ children }) {
           </Link>
         </div>
         <div className="m-auto mr-0">
-          <Link href="#newsletter">
+          <Link href="get-a-quote">
             <Button text="Get a Quote" outline={false} />
           </Link>
         </div>

@@ -43,7 +43,7 @@ function HeroSectionCarousel() {
                       className="aspect-[2/1.5] object-contain brightness-50"
                     />
                     {/* Gradient Overlay */}
-                    <div className="w-full aspect-[2/1.5] absolute bg-gradient-to-r from-black/100 to-transparent">
+                    <div className="w-full aspect-[2/1] absolute bg-gradient-to-r from-black/100 to-transparent">
                       <div className="absolute flex flex-col justify-center items-baseline inset-0 px-20 mx-2">
                         <p className=" text-md text-secondary-base font-semibold tracking-wider">
                           Welcome to DESI MANWAR
@@ -102,7 +102,7 @@ function HeroSectionCarousel() {
                       className="aspect-[1/2] object-cover brightness-50"
                     />
                     {/* Gradient Overlay */}
-                    <div className="w-full aspect-[1/2] absolute bg-gradient-to-r from-black/100 to-transparent">
+                    <div className="w-full aspect-[1/1.75] absolute bg-gradient-to-r from-black/100 to-transparent">
                       <div className="absolute flex flex-col justify-center items-baseline inset-0 px-4 lg:px-20 mx-2">
                         <p className=" text-md text-secondary-base font-semibold tracking-wider">
                           Welcome to DESI MANWAR
