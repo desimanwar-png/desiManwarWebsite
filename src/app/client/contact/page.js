@@ -22,9 +22,9 @@ function ContactPage() {
               <h1 className="text-primary-base text-4xl font-bold pb-4">
                 Contact Us <span className="text-accent-base">_</span>
               </h1>
-              <p className="pb-12 font-semibold tracking-wide">
+              <p className="pb-12 font-semibold text-md tracking-wide">
                 We would love to hear from you! Whether you have questions,
-                feedback, or need assistance, we are here to help !
+                feedback, or need assistance, we are here to help!
               </p>
             </div>
             <div>
@@ -117,7 +117,7 @@ function ContactPage() {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="w-screen lg:w-auto aspect-square px-4 rounded-xl"
+                className="w-screen lg:w-auto aspect-square p-4 rounded-xl"
               ></iframe>
             </h1>
           </div>
