@@ -5,7 +5,7 @@ import React from 'react'
 
 function AboutUs() {
   return (
-    <div className="flex flex-col lg:flex-row text-primary-base h-[140vh] lg:h-screen">
+    <div className="flex flex-col lg:flex-row text-primary-base h-[130vh] lg:h-screen">
       <div className="w-full lg:w-1/2 shadow-lg">
         <Image
           src="/images/about-us.jpg"

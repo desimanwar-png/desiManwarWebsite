@@ -9,9 +9,9 @@ function ContactPage() {
         <Image
           src="/images/contact-us.jpg"
           alt="contact-us-image"
-          width={1500}
-          height={400}
-          className="object-fill aspect-video"
+          width={1920}
+          height={1080}
+          className="w-full aspect-video object-fill"
         />
         <div className="absolute w-full aspect-video top-0 bg-gradient-to-l from-secondary-dark to-transparent"></div>
       </div>

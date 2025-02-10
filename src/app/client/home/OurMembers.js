@@ -26,7 +26,7 @@ function OurMembers() {
   return (
     <div className="px-4 lg:px-20 pt-12 lg:pt-6">
       <div className="py-20">
-        <h1 className="text-4xl lg:text-6xl flex justify-center text-secondary-dark dark:text-secondary-base tracking-wide font-bold">
+        <h1 className="text-3xl lg:text-6xl flex justify-center text-secondary-dark dark:text-secondary-base tracking-wide font-bold">
           _ Meet Our
           <span className="text-accent-base pl-2 lg:pl-4"> Members _</span>
         </h1>

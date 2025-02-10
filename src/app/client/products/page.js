@@ -24,6 +24,7 @@ function ProductsPage() {
           </div>
         </div>
       </div>
+      <div className="px-4 lg:px-20">Products</div>
     </div>
   )
 }

@@ -51,7 +51,7 @@ const points = [
 
 function WhyUs() {
   return (
-    <div className="flex flex-col lg:flex-row text-primary-base h-[140vh] lg:h-screen">
+    <div className="w-screen flex flex-col lg:flex-row text-primary-base h-[140vh] lg:h-screen">
       <div className="w-full lg:w-1/2 px-4 lg:pl-8 lg:pr-20 bg-primary-dark flex flex-col justify-center pb-12 lg:pb-0">
         <h1 className="text-5xl lg:text-6xl font-semibold text-secondary-dark mt-16 lg:mt-0">
           Why Choose Us _

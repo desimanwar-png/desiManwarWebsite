@@ -1,3 +1,5 @@
+'use client'
+
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Carousel,
@@ -7,15 +9,19 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 import React from 'react'
+import Autoplay from 'embla-carousel-autoplay'
+
+const plugin = Autoplay({ delay: 3000 })
 
 function Testimonials() {
   return (
     <div className="px-4 lg:px-20 bg-primary-dark pt-16 py-20">
-      <div className="flex justify-center text-5xl lg:text-7xl font-semibold pb-6 bg-gradient-to-tr from-primary-base to-accent-base bg-clip-text text-transparent">
+      <div className="flex justify-center text-4xl lg:text-7xl font-semibold pb-6 bg-gradient-to-tr from-primary-base to-accent-base bg-clip-text text-transparent">
         <h1 className="py-4">_ Testimonials _</h1>
       </div>
       <div>
         <Carousel
+          plugins={[plugin]}
           className="w-full "
           opts={{
             loop: true,
@@ -39,8 +45,8 @@ function Testimonials() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          {/* <CarouselPrevious /> */}
+          {/* <CarouselNext /> */}
         </Carousel>
       </div>
     </div>

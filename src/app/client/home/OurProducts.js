@@ -5,7 +5,7 @@ import React from 'react'
 
 function OurProducts() {
   return (
-    <div className="px-4 lg:px-20 h-[125vh] lg:h-[85vh]">
+    <div className="px-4 lg:px-20 h-[100vh] lg:h-[85vh]">
       <div className="flex justify-center py-12">
         <h1 className="text-3xl lg:text-5xl font-semibold">_ Our Products _</h1>
       </div>
@@ -18,7 +18,7 @@ function OurProducts() {
         <Card />
         <Card />
       </div>
-      <div className="w-full py-4  dark:text-secondary-base hover:text-secondary-base dark:hover:text-accent-base">
+      <div className="w-full py-4 dark:text-secondary-base hover:text-secondary-base dark:hover:text-accent-base">
         <Link
           // TODO: Add href
           href="/"
