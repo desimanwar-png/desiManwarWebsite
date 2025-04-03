@@ -1,53 +1,137 @@
 'use client'
 
-import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-
+import { Home, User, LogOut, Box, Database, User2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { AlignJustify, LogOut, X } from 'lucide-react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
-function AdminNav() {
+const menuItems = [
+  { name: 'Dashboard', icon: Home, route: '/admin' },
+  { name: 'Users', icon: User, route: '/admin/users' },
+]
+
+const settingsItems = [{ name: 'Users', icon: User2, route: '/admin/users' }]
+
+const AdminNav = () => {
   const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
 
   const handleLogout = () => {
-    document.cookie = 'userId=; max-age=0; path=/'
-    document.cookie = 'accessToken=; max-age=0; path=/'
-
-    router.push('/login')
-  }
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen)
+    document.cookie =
+      'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    document.cookie = 'userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    router.push('/admin')
   }
 
   return (
-    <div className="flex flex-col md:flex-row">
-      <Button onClick={toggleSidebar} className="w-12 h-8 m-2">
-        <AlignJustify size={24} />
-      </Button>
-      <div
-        className={`${
-          isOpen ? 'left-0' : 'left-[-100%]'
-        } md:block w-64 h-[100vh] p-2 border-r-4 fixed md:absolute top-0 left-0 z-40 bg-secondary-dark dark:bg-primary-dark text-white transition-all duration-500 ease-in-out`}
-      >
-        <div className="flex items-center mb-6 ">
-          <Button onClick={toggleSidebar} className="mr-2">
-            <X />
-          </Button>
-          <h2 className="text-xl font-semibold">Hello, Admin</h2>
-        </div>
+    <div className="w-16 md:w-20 h-screen bg-secondary-dark text-primary-base p-4 flex flex-col items-center border-r-2 border-primary-base">
+      {/* Accordion with Tooltip for Box Icon */}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="main-nav">
+                <AccordionTrigger className="flex justify-center">
+                  <Box className="w-6 h-6 text-white" />
+                </AccordionTrigger>
+                <AccordionContent>
+                  <nav className="flex flex-col space-y-2">
+                    {menuItems.map((item) => (
+                      <TooltipProvider key={item.name}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              onClick={() => router.push(item.route)}
+                              className="flex justify-center p-1.5 w-full rounded-lg"
+                            >
+                              <item.icon className="w-6 h-6" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{item.name}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ))}
+                  </nav>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Modeler</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
-        <nav className="flex flex-col space-y-4"></nav>
-        <div className="absolute bottom-2 ">
-          <Button className="w-full">
-            <LogOut />
-            <span onClick={handleLogout} className="font-semibold">
-              Logout
-            </span>
-          </Button>
-        </div>
-      </div>
+      {/* Accordion with Tooltip for Database Icon */}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="settings">
+                <AccordionTrigger className="flex justify-center">
+                  <Database className="w-6 h-6 text-white" />
+                </AccordionTrigger>
+                <AccordionContent>
+                  <nav className="flex flex-col space-y-2">
+                    {settingsItems.map((item) => (
+                      <TooltipProvider key={item.name}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              onClick={() => router.push(item.route)}
+                              className="flex justify-center p-1.5 w-full rounded-lg"
+                            >
+                              <item.icon className="w-6 h-6" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{item.name}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ))}
+                  </nav>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Data</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      {/* Logout Button */}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={handleLogout}
+              variant="destructive"
+              className="mt-auto flex justify-center p-1.5 w-full rounded-lg"
+            >
+              <LogOut className="h-6 w-6" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Logout</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   )
 }
