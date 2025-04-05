@@ -89,6 +89,7 @@ function MembersPage() {
                         className="w-10 h-10 rounded-full"
                         width={40}
                         height={40}
+                        priority
                       />
                     ) : (
                       'No Image'

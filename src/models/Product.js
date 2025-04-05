@@ -1,3 +1,5 @@
+import mongoose from 'mongoose'
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -11,7 +13,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  imageUrl: {
+  image: {
     type: String,
     default: '',
   },
@@ -53,3 +55,6 @@ const productSchema = new mongoose.Schema({
     default: Date.now,
   },
 })
+
+export default mongoose.models.Product ||
+  mongoose.model('Product', productSchema)

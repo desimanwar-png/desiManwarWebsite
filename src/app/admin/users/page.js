@@ -30,7 +30,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { toast } from '@/hooks/use-toast'
-import { deleteUser, getUsers, signup } from './action'
+import { deleteUser, getUsers, signup } from './actions'
 
 function UsersPage() {
   const [email, setEmail] = useState('')
