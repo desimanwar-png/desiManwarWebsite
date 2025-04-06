@@ -24,7 +24,6 @@ function ProductsPage() {
       const result = await getProducts()
 
       setProducts(result.data)
-      console.log(result.data)
     }
 
     fetchProducts()
@@ -32,7 +31,7 @@ function ProductsPage() {
 
   const onProductAdded = async () => {
     const updatedProducts = await getProducts()
-    setProducts(updatedProducts)
+    setProducts(updatedProducts.data)
   }
 
   const handleProductDelete = async (productId) => {
@@ -71,6 +70,7 @@ function ProductsPage() {
               <TableHead>Description</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Sub-Category</TableHead>
+              <TableHead>Priority</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Image</TableHead>
               <TableHead>Actions</TableHead>
@@ -84,6 +84,7 @@ function ProductsPage() {
                   <TableCell>{product.description}</TableCell>
                   <TableCell>{product.category}</TableCell>
                   <TableCell>{product.subCategory}</TableCell>
+                  <TableCell>{product.priority}</TableCell>
                   <TableCell>
                     {product.pricePerKg.amount} {product.pricePerKg.currency}
                   </TableCell>

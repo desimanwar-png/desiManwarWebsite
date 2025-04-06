@@ -1,27 +1,56 @@
+'use client'
+
+import { getProducts } from '@/app/admin/products/actions'
 import Card from '@/components/Card'
-import { ArrowRight, Text } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function OurProducts() {
+  const [products, setProducts] = React.useState([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const result = await getProducts()
+
+      if (result.status === 'success') {
+        setProducts(result.data)
+      } else {
+        console.error('Failed to fetch products:', result.message)
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
+  // Sort by priority descending and pick top 3
+  const topThree = [...products]
+    .sort((a, b) => b.priority - a.priority)
+    .slice(0, 3)
+
   return (
-    <div className="px-4 lg:px-20 h-[100vh] lg:h-[85vh]">
+    <div className="px-4 lg:px-20 h-[100vh] lg:h-[100vh]">
       <div className="flex justify-center py-12">
-        <h1 className="text-3xl lg:text-5xl font-semibold">_ Our Products _</h1>
+        <h1 className="text-3xl lg:text-5xl font-semibold">
+          _ Our Top Products _
+        </h1>
       </div>
+
       <div className="flex flex-col lg:flex-row gap-8">
-        <Card
-          title="Cummin Seeds"
-          content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet purus et nisi fermentum fermentum. Sed sit amet purus et nisi fermentum fermentum."
-          icon={<Text size={100} />}
-        />
-        <Card />
-        <Card />
+        {topThree.map((product) => (
+          <Card
+            key={product._id}
+            title={product.name}
+            content={product.description}
+            imageBase64={product.image}
+            glow={false}
+          />
+        ))}
       </div>
-      <div className="w-full py-4 dark:text-secondary-base hover:text-secondary-base dark:hover:text-accent-base">
+
+      <div className="w-full py-4 dark:text-secondary-base hover:text-secondary-base dark:hover:text-accent-base mb-24">
         <Link
-          // TODO: Add href
-          href="/"
+          href="/client/products"
           className="float-end flex gap-2 hover:scale-105 transition-all ease-in-out text-xl cursor-pointer mx-2"
         >
           See More <ArrowRight size={25} />

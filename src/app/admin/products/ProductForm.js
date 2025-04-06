@@ -144,6 +144,7 @@ function ProductForm({ onProductAdded }) {
                 <input
                   type="number"
                   name="pricePerKg.amount"
+                  step="any"
                   className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
                   required
                 />
@@ -169,6 +170,17 @@ function ProductForm({ onProductAdded }) {
                   value={slug || ''}
                   className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
                   readOnly
+                />
+              </div>
+              <div>
+                <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
+                  Priority
+                </Label>
+                <input
+                  type="number"
+                  name="priority"
+                  className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
+                  defaultValue="1000"
                 />
               </div>
               <div>

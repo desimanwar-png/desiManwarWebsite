@@ -43,7 +43,7 @@ function ClientNav() {
             className="hidden dark:block w-full h-full rounded-full"
           />
           <Image
-            src="/images/logo-image-dark.png"
+            src="/images/logo-image-dark.jpg"
             alt="Desi Manwar Logo"
             width={50}
             height={50}

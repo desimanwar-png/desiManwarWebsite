@@ -27,8 +27,8 @@ const productSchema = new mongoose.Schema({
   },
   pricePerKg: {
     amount: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
     },
     currency: {
       type: String,
@@ -49,6 +49,10 @@ const productSchema = new mongoose.Schema({
   isFSSAICertified: {
     type: Boolean,
     default: false,
+  },
+  priority: {
+    type: Number,
+    default: 1000,
   },
   createdAt: {
     type: Date,

@@ -10,6 +10,7 @@ import {
   User2,
   PersonStanding,
   PackageSearch,
+  Mailbox,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -34,6 +35,11 @@ const settingsItems = [
   { name: 'Users', icon: User2, route: '/admin/users' },
   { name: 'Members', icon: PersonStanding, route: '/admin/members' },
   { name: 'Products', icon: PackageSearch, route: '/admin/products' },
+  {
+    name: 'NewsLetter Subs',
+    icon: Mailbox,
+    route: '/admin/newsletterSubscriber',
+  },
 ]
 
 const AdminNav = () => {

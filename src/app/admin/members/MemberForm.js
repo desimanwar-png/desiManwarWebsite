@@ -48,7 +48,7 @@ function MemberForm({ onMemberAdded }) {
     } else {
       toast({
         title: 'Success',
-        description: 'User created successfully',
+        description: 'Member created successfully',
       })
       onMemberAdded() // Refresh member list
     }

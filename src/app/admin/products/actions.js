@@ -33,9 +33,9 @@ export async function addProduct(formData) {
     const category = formData.get('category')
     const subCategory = formData.get('subCategory')
     const slug = formData.get('slug')
-    const imageUrl = formData.get('imageUrl') || ''
+    const image = formData.get('imageUrl') || ''
+    const priority = parseInt(formData.get('priority')) || 0
     const isFSSAICertified = formData.get('isFSSAICertified') === 'on'
-
     const priceAmount = parseFloat(formData.get('pricePerKg.amount')) || 0
     const priceCurrency = formData.get('pricePerKg.currency') || 'USD'
 
@@ -58,8 +58,9 @@ export async function addProduct(formData) {
       category,
       subCategory,
       slug,
-      imageUrl,
+      image,
       isFSSAICertified,
+      priority,
       pricePerKg: {
         amount: priceAmount,
         currency: priceCurrency,

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import {
   Mail,
@@ -12,8 +14,27 @@ import {
   MessageSquare,
 } from 'lucide-react'
 import Link from 'next/link'
+import { createNewsletterSubscriber } from '../admin/newsletterSubscriber/actions'
+import { toast } from '@/hooks/use-toast'
 
 function Footer() {
+  const handleSubmit = async (formData) => {
+    const result = await createNewsletterSubscriber(formData)
+
+    if (result.status === 'error') {
+      toast({
+        title: 'Error',
+        description: result.message,
+        variant: 'destructive',
+      })
+    } else {
+      toast({
+        title: 'Success',
+        description: 'Newsletter subscription successful',
+      })
+    }
+  }
+
   return (
     <footer className="bg-secondary-dark text-primary-base py-10 px-4 lg:px-20 shadow-lg">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -170,16 +191,20 @@ function Footer() {
             Subscribe to our newsletter to get updates about new products and
             offers directly to your inbox.
           </p>
-          <div className="flex">
+          <form
+            action={async (formData) => handleSubmit(formData)}
+            className="flex"
+          >
             <input
               type="email"
+              name="email"
               placeholder="Your email"
               className="px-4 py-2 w-full text-secondary-dark rounded-l-md focus:outline-none"
             />
             <button className="px-4 py-2 bg-accent-base hover:bg-primary-dark text-secondary-dark font-semibold rounded-r-md transition-all">
               SignUp
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </footer>

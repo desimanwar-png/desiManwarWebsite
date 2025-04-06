@@ -29,29 +29,32 @@ function AboutUs() {
           excellence.
         </p>
         <div className="flex flex-col lg:flex-row mt-8 lg:justify-start space-y-12 lg:space-y-0 lg:space-x-12">
-          <div className="flex">
-            <Users
-              size={75}
-              className="p-2 border-4 border-secondary-dark rounded-lg text-secondary-dark bg-secondary-base"
-            />
+          <div className="flex items-center">
+            <div className="p-[3px] bg-gradient-to-tl from-accent-base to-primary-base rounded-lg">
+              <Users
+                size={75}
+                className="p-2 bg-secondary-base text-secondary-dark rounded-lg"
+              />
+            </div>
+
             <div className="pl-4">
-              <h3 className="text-3xl font-bold text-secondary-dark mt-2">
-                12
-              </h3>
+              <h3 className="text-3xl font-bold text-primary-base mt-2">12</h3>
               <p className="text-lg font-semibold tracking-wider">
                 Happy Clients
               </p>
             </div>
           </div>
-          <div className="flex">
-            <CircleCheckBig
-              size={75}
-              className="p-2 border-4 border-secondary-dark rounded-lg text-secondary-dark bg-secondary-base"
-            />
+
+          <div className="flex items-center mt-6">
+            <div className="p-[3px] bg-gradient-to-tl from-accent-base to-primary-base rounded-lg">
+              <CircleCheckBig
+                size={75}
+                className="p-2 bg-secondary-base text-secondary-dark rounded-lg"
+              />
+            </div>
+
             <div className="pl-4">
-              <h3 className="text-3xl font-bold text-secondary-dark mt-2">
-                12
-              </h3>
+              <h3 className="text-3xl font-bold text-primary-base mt-2">12</h3>
               <p className="text-lg font-semibold tracking-wider">
                 Delivery Completed
               </p>
@@ -60,7 +63,8 @@ function AboutUs() {
         </div>
         <Button
           text="Explore More"
-          className="border border-secondary-dark mt-8 max-w-40 text-secondary-dark"
+          outline
+          className="max-w-40 mt-8 lg:mt-12 !border-primary-base !text-primary-base hover:!text-secondary-dark hover:!border-secondary-dark"
         />
       </div>
     </div>
