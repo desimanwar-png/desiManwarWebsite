@@ -1,7 +1,29 @@
+'use client'
+
+import { createContactedPerson } from '@/app/admin/contactedPerson/actions'
+import { toast } from '@/hooks/use-toast'
 import Image from 'next/image'
 import React from 'react'
 
 function ContactPage() {
+  const handleSubmit = async (formData) => {
+    const result = await createContactedPerson(formData)
+
+    if (result.status === 'success') {
+      toast({
+        title: 'Sent Successfully!',
+        description: 'We will get back to you soon!',
+        status: 'success',
+      })
+    } else {
+      toast({
+        title: 'Error!',
+        description: 'Failed to send message. Please try again.',
+        status: 'error',
+      })
+    }
+  }
+
   return (
     // <div className="px-4 lg:px-20">
     <div className="relative">
@@ -28,8 +50,10 @@ function ContactPage() {
               </p>
             </div>
             <div>
-              {/* //TODO: add action */}
-              <form className="w-full rounded-lg space-y-6">
+              <form
+                action={async (formData) => handleSubmit(formData)}
+                className="w-full rounded-lg space-y-6"
+              >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div>
                     <label
@@ -41,6 +65,7 @@ function ContactPage() {
                     <input
                       type="text"
                       id="name"
+                      name="name"
                       placeholder="Your Name"
                       className="w-full p-3 border text-secondary-dark border-secondary-dark rounded focus:outline-none focus:ring-2 focus:ring-accent-base"
                     />
@@ -56,6 +81,7 @@ function ContactPage() {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       placeholder="Your Email"
                       className="w-full p-3 border text-secondary-dark border-secondary-dark rounded focus:outline-none focus:ring-2 focus:ring-accent-base"
                     />
@@ -72,6 +98,7 @@ function ContactPage() {
                   <input
                     type="text"
                     id="subject"
+                    name="subject"
                     placeholder="Subject"
                     className="w-full p-3 border text-secondary-dark border-secondary-dark rounded focus:outline-none focus:ring-2 focus:ring-accent-base"
                   />
@@ -86,6 +113,7 @@ function ContactPage() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows="4"
                     placeholder="Write your message here..."
                     className="w-full p-3 border text-secondary-dark border-secondary-dark rounded focus:outline-none focus:ring-2 focus:ring-accent-base"

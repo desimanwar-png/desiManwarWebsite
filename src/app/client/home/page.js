@@ -59,7 +59,7 @@ function HomePage() {
         {points.map((point, index) => (
           <div
             key={index}
-            className="flex w-full justify-between px-4 py-12 lg:px-0 lg:justify-around pb-4"
+            className="flex lg:flex-row-reverse w-full justify-between px-4 py-12 lg:px-0 lg:justify-around pb-4"
           >
             <div className="">
               <div className="">{point.icon}</div>

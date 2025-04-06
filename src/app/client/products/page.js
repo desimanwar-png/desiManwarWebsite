@@ -1,8 +1,27 @@
+'use client'
+
+import { getProducts } from '@/app/admin/products/actions'
+import Card from '@/components/Card'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 function ProductsPage() {
-  // return <div className="px-4 lg:px-20">
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const result = await getProducts()
+
+      if (result.status === 'success') {
+        setProducts(result.data)
+      } else {
+        console.error('Failed to fetch products:', result.message)
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
   return (
     <div>
       <div className="relative">
@@ -24,7 +43,17 @@ function ProductsPage() {
           </div>
         </div>
       </div>
-      <div className="px-4 lg:px-20">Products</div>
+      <div className="px-4 lg:px-20 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product, index) => (
+          <Card
+            key={index}
+            title={product.name}
+            content={product.description}
+            imageBase64={product.image}
+            glow={false}
+          />
+        ))}
+      </div>
     </div>
   )
 }

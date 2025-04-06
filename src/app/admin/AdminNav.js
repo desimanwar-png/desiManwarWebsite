@@ -11,6 +11,7 @@ import {
   PersonStanding,
   PackageSearch,
   Mailbox,
+  UserRoundPen,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -39,6 +40,11 @@ const settingsItems = [
     name: 'NewsLetter Subs',
     icon: Mailbox,
     route: '/admin/newsletterSubscriber',
+  },
+  {
+    name: 'Contacted Persons',
+    icon: UserRoundPen,
+    route: '/admin/contactedPerson',
   },
 ]
 
