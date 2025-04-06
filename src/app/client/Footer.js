@@ -166,17 +166,21 @@ function Footer() {
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
-              {/* // TODO: Add herf  */}
-              <Link href="/" className="flex items-center gap-2">
+              <Link
+                href="/client/terms-and-conditions"
+                className="flex items-center gap-2"
+              >
                 <ChevronsRight size={20} />
                 Terms & Conditions
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
-              {/* // TODO: Add herf  */}
-              <Link href="/" className="flex items-center gap-2">
+              <Link
+                href="/client/privacy-policy"
+                className="flex items-center gap-2"
+              >
                 <ChevronsRight size={20} />
-                Support
+                Privacy Policy
               </Link>
             </li>
           </ul>

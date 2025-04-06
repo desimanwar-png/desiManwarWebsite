@@ -38,7 +38,9 @@ function AboutUs() {
             </div>
 
             <div className="pl-4">
-              <h3 className="text-3xl font-bold text-primary-base mt-2">12</h3>
+              <h3 className="text-3xl font-bold text-primary-base mt-2">
+                50 +
+              </h3>
               <p className="text-lg font-semibold tracking-wider">
                 Happy Clients
               </p>
@@ -54,7 +56,9 @@ function AboutUs() {
             </div>
 
             <div className="pl-4">
-              <h3 className="text-3xl font-bold text-primary-base mt-2">12</h3>
+              <h3 className="text-3xl font-bold text-primary-base mt-2">
+                179 +
+              </h3>
               <p className="text-lg font-semibold tracking-wider">
                 Delivery Completed
               </p>

@@ -23,9 +23,9 @@ function OurProducts() {
     fetchProducts()
   }, [])
 
-  // Sort by priority descending and pick top 3
+  // Sort by priority ascending and pick top 3
   const topThree = [...products]
-    .sort((a, b) => b.priority - a.priority)
+    .sort((a, b) => a.priority - b.priority)
     .slice(0, 3)
 
   return (
