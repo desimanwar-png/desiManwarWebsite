@@ -18,6 +18,15 @@ import convertToBase64 from '@/lib/convertToBase64'
 import imageCompression from 'browser-image-compression'
 import { addProduct } from './actions'
 
+const categories = [
+  'Whole Spices',
+  'Ground Spices',
+  'Edible Oils',
+  'Millets',
+  'Pulses(Dal)',
+  'Rice',
+]
+
 function ProductForm({ onProductAdded }) {
   const [error, setError] = useState('')
   const [title, setTitle] = useState('')
@@ -52,6 +61,7 @@ function ProductForm({ onProductAdded }) {
 
   const handleSubmit = async (formData) => {
     formData.set('imageUrl', preview.myFile)
+
     const result = await addProduct(formData)
 
     if (result.status === 'error') {
@@ -107,36 +117,22 @@ function ProductForm({ onProductAdded }) {
               </div>
               <div>
                 <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
-                  Specification
-                </Label>
-                <input
-                  type="text"
-                  name="specification"
-                  className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
-                />
-              </div>
-              <div>
-                <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
                   Category
                 </Label>
-                <input
-                  type="text"
+                <select
                   name="category"
                   className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
                   required
-                />
+                >
+                  <option value="">Select a Category</option>
+                  {categories.map((sub) => (
+                    <option key={sub} value={sub}>
+                      {sub}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div>
-                <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
-                  Sub-Category
-                </Label>
-                <input
-                  type="text"
-                  name="subCategory"
-                  className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
-                  required
-                />
-              </div>
+
               <div>
                 <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
                   Price per Kg (Amount)

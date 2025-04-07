@@ -11,10 +11,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import ProductForm from './ProductForm'
-import { deleteProduct, getProducts } from './actions'
-import Image from 'next/image'
-import { Trash2 } from 'lucide-react'
+import { getProducts, updateProduct } from './actions'
 import { toast } from '@/hooks/use-toast'
+import ProductEditModal from './ProductEditModal'
 
 function ProductsPage() {
   const [products, setProducts] = useState([])
@@ -34,24 +33,17 @@ function ProductsPage() {
     setProducts(updatedProducts.data)
   }
 
-  const handleProductDelete = async (productId) => {
-    const confirmed = confirm('Are you sure you want to delete this product?')
+  const handleProductUpdate = async (formData) => {
+    const result = await updateProduct(formData)
 
-    if (confirmed) {
-      const response = await deleteProduct(productId)
-      if (response.status === 'success') {
-        toast({
-          title: 'Success',
-          description: 'Product deleted successfully',
-        })
-        onProductAdded()
-      } else {
-        toast({
-          title: 'Error',
-          description: response.message,
-          variant: 'destructive',
-        })
-      }
+    if (result.status === 'success') {
+      toast({
+        title: 'Updated successfully',
+        description: 'Product has been updated successfully.',
+      })
+      onProductAdded()
+    } else {
+      toast({ title: 'Update failed', variant: 'destructive' })
     }
   }
 
@@ -69,17 +61,40 @@ function ProductsPage() {
               <TableHead>Name</TableHead>
               <TableHead>Description</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Sub-Category</TableHead>
               <TableHead>Priority</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Image</TableHead>
-              <TableHead>Actions</TableHead>
+              {/* <TableHead>Actions</TableHead> */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {products.length > 0 ? (
               products.map((product) => (
-                <TableRow key={product._id}>
+                <ProductEditModal
+                  key={product._id}
+                  product={product}
+                  onUpdate={handleProductUpdate}
+                  onProductAdded={onProductAdded}
+                />
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan="7" className="text-center">
+                  No Products found
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  )
+}
+
+export default ProductsPage
+
+{
+  /* <TableRow key={product._id}>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.description}</TableCell>
                   <TableCell>{product.category}</TableCell>
@@ -106,19 +121,5 @@ function ProductsPage() {
                     </div>
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan="7" className="text-center">
-                  No Products found
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
-  )
+              )) */
 }
-
-export default ProductsPage

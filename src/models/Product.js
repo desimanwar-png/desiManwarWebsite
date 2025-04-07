@@ -9,19 +9,23 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  specification: {
-    type: String,
-    default: '',
-  },
+  specification: [
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+      value: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   image: {
     type: String,
     default: '',
   },
   category: {
-    type: String,
-    required: true,
-  },
-  subCategory: {
     type: String,
     required: true,
   },
