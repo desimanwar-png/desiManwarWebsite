@@ -38,13 +38,18 @@ function OurProducts() {
 
       <div className="flex flex-col lg:flex-row gap-8">
         {topThree.map((product) => (
-          <Card
+          <Link
             key={product._id}
-            title={product.name}
-            content={product.description}
-            imageBase64={product.image}
-            glow={false}
-          />
+            href={`/client/products/${product.slug}`}
+            className="hover:scale-105 transition-all ease-in-out"
+          >
+            <Card
+              title={product.name}
+              content={product.description}
+              imageBase64={product.image}
+              glow={false}
+            />
+          </Link>
         ))}
       </div>
 
