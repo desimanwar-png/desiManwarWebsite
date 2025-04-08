@@ -12,6 +12,7 @@ import {
   PackageSearch,
   Mailbox,
   UserRoundPen,
+  MessageSquareText,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -45,6 +46,11 @@ const settingsItems = [
     name: 'Contacted Persons',
     icon: UserRoundPen,
     route: '/admin/contactedPerson',
+  },
+  {
+    name: 'Testimonials',
+    icon: MessageSquareText,
+    route: '/admin/testimonials',
   },
 ]
 

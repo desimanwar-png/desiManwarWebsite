@@ -2,6 +2,8 @@ import { getMembers } from '@/app/admin/members/actions'
 import MemberCard from '@/components/MemberCard'
 import React, { Suspense } from 'react'
 
+export const dynamic = 'force-dynamic'
+
 async function fetchSortedMembers() {
   try {
     const response = await getMembers()
