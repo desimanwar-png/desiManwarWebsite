@@ -55,21 +55,6 @@ const points = [
 ]
 
 function HomePage() {
-  const [members, setMembers] = useState([])
-  const [products, setProducts] = useState([])
-
-  useEffect(() => {
-    async function fetchData() {
-      const resMembers = await getMembersByPriority()
-      const resProducts = await getTopThreeProducts()
-
-      setMembers(resMembers.data)
-      setProducts(resProducts.data)
-    }
-
-    fetchData()
-  }, [])
-
   return (
     <div className="">
       {/* <div className="px-4 lg:px-20"> */}
@@ -93,9 +78,9 @@ function HomePage() {
         ))}
       </div>
       <AboutUs />
-      <OurProducts products={products} />
+      <OurProducts />
       <WhyUs />
-      <OurMembers members={members} />
+      <OurMembers />
       <Testimonials />
     </div>
   )

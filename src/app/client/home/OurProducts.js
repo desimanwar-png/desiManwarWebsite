@@ -1,9 +1,26 @@
+'use client'
+
+import { getTopThreeProducts } from '@/app/admin/products/actions'
 import Card from '@/components/Card'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-function OurProducts({ products }) {
+function OurProducts() {
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const resProducts = await getTopThreeProducts()
+
+      if (resProducts) {
+        setProducts(resProducts.data)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <div className="px-4 lg:px-20 h-[100vh] lg:h-[100vh]">
       <div className="flex justify-center py-12">
@@ -13,20 +30,26 @@ function OurProducts({ products }) {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {products.map((product) => (
-          <Link
-            key={product._id}
-            href={`/client/products/${product.slug}`}
-            className="hover:scale-105 transition-all ease-in-out"
-          >
-            <Card
-              title={product.name}
-              content={product.description}
-              imageBase64={product.image}
-              glow={false}
-            />
-          </Link>
-        ))}
+        {products.length > 0 ? (
+          products.map((product) => (
+            <Link
+              key={product._id}
+              href={`/client/products/${product.slug}`}
+              className="hover:scale-105 transition-all ease-in-out"
+            >
+              <Card
+                title={product.name}
+                content={product.description}
+                imageBase64={product.image}
+                glow={false}
+              />
+            </Link>
+          ))
+        ) : (
+          <p className="text-center text-gray-500 col-span-3">
+            No products found
+          </p>
+        )}
       </div>
 
       <div className="w-full py-4 dark:text-secondary-base hover:text-secondary-base dark:hover:text-accent-base mb-24">

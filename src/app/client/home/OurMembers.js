@@ -1,7 +1,24 @@
-import MemberCard from '@/components/MemberCard'
-import React from 'react'
+'use client'
 
-function OurMembers({ members }) {
+import { getMembersByPriority } from '@/app/admin/members/actions'
+import MemberCard from '@/components/MemberCard'
+import React, { useEffect, useState } from 'react'
+
+function OurMembers() {
+  const [members, setMembers] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const resMembers = await getMembersByPriority()
+
+      if (resMembers) {
+        setMembers(resMembers.data)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <div className="px-4 lg:px-20 pt-12 lg:pt-6">
       <div className="py-20">
@@ -10,7 +27,7 @@ function OurMembers({ members }) {
           <span className="text-accent-base pl-2 lg:pl-4"> Members _</span>
         </h1>
 
-        <div className="pt-16 pb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="pt-16 pb-8 flex items-center gap-8">
           {members.length > 0 ? (
             members.map((member) => (
               <MemberCard key={member._id} member={member} />
