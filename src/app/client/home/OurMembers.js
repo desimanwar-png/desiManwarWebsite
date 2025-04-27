@@ -1,6 +1,6 @@
 import { getMembers } from '@/app/admin/members/actions'
 import MemberCard from '@/components/MemberCard'
-import React, { Suspense } from 'react'
+import React from 'react'
 
 export const dynamic = 'force-dynamic'
 
@@ -28,23 +28,17 @@ async function OurMembers() {
           <span className="text-accent-base pl-2 lg:pl-4"> Members _</span>
         </h1>
 
-        <Suspense
-          fallback={
-            <p className="text-center text-gray-500">Loading members...</p>
-          }
-        >
-          <div className="pt-16 pb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {members.length > 0 ? (
-              members.map((member) => (
-                <MemberCard key={member._id} member={member} />
-              ))
-            ) : (
-              <p className="text-center text-gray-500 col-span-3">
-                No members found
-              </p>
-            )}
-          </div>
-        </Suspense>
+        <div className="pt-16 pb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {members.length > 0 ? (
+            members.map((member) => (
+              <MemberCard key={member._id} member={member} />
+            ))
+          ) : (
+            <p className="text-center text-gray-500 col-span-3">
+              No members found
+            </p>
+          )}
+        </div>
 
         <div className="flex justify-end text-secondary-dark dark:text-secondary-base hover:text-accent-base font-semibold tracking-wide">
           <h1 className="hover:scale-105 transition-all ease-in-out text-xl cursor-pointer mx-2">
