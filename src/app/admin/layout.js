@@ -1,14 +1,18 @@
 import React from 'react'
 import AdminNav from './AdminNav'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 
 function AdminLayout({ children }) {
   return (
-    <div className="flex h-screen w-screen">
-      <div className="border-r-2 border-primary-dark/50 dark:border-primary-base/50">
-        <AdminNav />
+    <SidebarProvider>
+      <div className="flex h-screen w-screen">
+        <div className="">
+          <AdminNav />
+        </div>
+        <SidebarTrigger />
+        <div className="w-full overflow-auto">{children}</div>
       </div>
-      <div className="w-full">{children}</div>
-    </div>
+    </SidebarProvider>
   )
 }
 

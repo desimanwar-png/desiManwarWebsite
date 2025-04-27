@@ -1,57 +1,30 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import {
-  Home,
-  User,
-  LogOut,
-  Box,
-  Database,
-  User2,
-  PersonStanding,
-  PackageSearch,
-  Mailbox,
-  UserRoundPen,
-  MessageSquareText,
-} from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Sidebar, SidebarContent, SidebarFooter } from '@/components/ui/sidebar'
+import Link from 'next/link'
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
+  Users,
+  LayoutDashboard,
+  ShoppingCart,
+  Mail,
+  Phone,
+  MessageSquare,
+} from 'lucide-react'
 
 const menuItems = [
-  { name: 'Dashboard', icon: Home, route: '/admin' },
-  { name: 'Users', icon: User, route: '/admin/users' },
+  { name: 'Dashboard', route: '/admin' },
+  { name: 'Users', route: '/admin/users' },
 ]
 
 const settingsItems = [
-  { name: 'Users', icon: User2, route: '/admin/users' },
-  { name: 'Members', icon: PersonStanding, route: '/admin/members' },
-  { name: 'Products', icon: PackageSearch, route: '/admin/products' },
-  {
-    name: 'NewsLetter Subs',
-    icon: Mailbox,
-    route: '/admin/newsletterSubscriber',
-  },
-  {
-    name: 'Contacted Persons',
-    icon: UserRoundPen,
-    route: '/admin/contactedPerson',
-  },
-  {
-    name: 'Testimonials',
-    icon: MessageSquareText,
-    route: '/admin/testimonials',
-  },
+  { name: 'Users', route: '/admin/users', icon: Users },
+  { name: 'Members', route: '/admin/members', icon: Users },
+  { name: 'Products', route: '/admin/products', icon: ShoppingCart },
+  { name: 'NewsLetter Subs', route: '/admin/newsletterSubscriber', icon: Mail },
+  { name: 'Contacted Persons', route: '/admin/contactedPerson', icon: Phone },
+  { name: 'Testimonials', route: '/admin/testimonials', icon: MessageSquare },
 ]
 
 const AdminNav = () => {
@@ -65,105 +38,34 @@ const AdminNav = () => {
   }
 
   return (
-    <div className="w-16 md:w-20 h-screen bg-secondary-dark text-primary-base p-4 flex flex-col items-center border-r-2 border-primary-base">
-      {/* Accordion with Tooltip for Box Icon */}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="main-nav">
-                <AccordionTrigger className="flex justify-center">
-                  <Box className="w-6 h-6 text-white" />
-                </AccordionTrigger>
-                <AccordionContent>
-                  <nav className="flex flex-col space-y-2">
-                    {menuItems.map((item) => (
-                      <TooltipProvider key={item.name}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              onClick={() => router.push(item.route)}
-                              className="flex justify-center p-1.5 w-full rounded-lg"
-                            >
-                              <item.icon className="w-6 h-6" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{item.name}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ))}
-                  </nav>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Modeler</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-
-      {/* Accordion with Tooltip for Database Icon */}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="settings">
-                <AccordionTrigger className="flex justify-center">
-                  <Database className="w-6 h-6 text-white" />
-                </AccordionTrigger>
-                <AccordionContent>
-                  <nav className="flex flex-col space-y-2">
-                    {settingsItems.map((item) => (
-                      <TooltipProvider key={item.name}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              onClick={() => router.push(item.route)}
-                              className="flex justify-center p-1.5 w-full rounded-lg"
-                            >
-                              <item.icon className="w-6 h-6" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{item.name}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ))}
-                  </nav>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Data</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-
-      {/* Logout Button */}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              onClick={handleLogout}
-              variant="destructive"
-              className="mt-auto flex justify-center p-1.5 w-full rounded-lg"
-            >
-              <LogOut className="h-6 w-6" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Logout</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
+    <Sidebar className="">
+      <SidebarContent className="py-2 dark:bg-secondary-dark dark:text-primary-base">
+        {/* {menuItems.map((item) => (
+          <Link
+            key={item.route}
+            href={item.route}
+            className="px-4 py-1 w-full rounded-lg hover:bg-muted transition"
+          >
+            {item.name}
+          </Link>
+        ))} */}
+        {settingsItems.map((item) => (
+          <Link
+            key={item.route}
+            href={item.route}
+            className="flex items-center gap-3 px-4 py-2 w-full rounded-lg transition-all duration-300 ease-in-out hover:bg-primary-base/20 hover:text-primary font-medium"
+          >
+            <item.icon className="h-5 w-5" />
+            {item.name}
+          </Link>
+        ))}
+      </SidebarContent>
+      <SidebarFooter className="dark:bg-secondary-dark dark:text-primary-base">
+        <Button variant="destructive" className="w-full" onClick={handleLogout}>
+          Logout
+        </Button>
+      </SidebarFooter>
+    </Sidebar>
   )
 }
 
