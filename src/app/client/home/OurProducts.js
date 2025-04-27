@@ -1,6 +1,6 @@
 'use client'
 
-import { getProducts } from '@/app/admin/products/actions'
+import { getTopThreeProducts } from '@/app/admin/products/actions'
 import Card from '@/components/Card'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
@@ -11,7 +11,7 @@ function OurProducts() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const result = await getProducts()
+      const result = await getTopThreeProducts()
 
       if (result.status === 'success') {
         setProducts(result.data)
@@ -23,11 +23,6 @@ function OurProducts() {
     fetchProducts()
   }, [])
 
-  // Sort by priority ascending and pick top 3
-  const topThree = [...products]
-    .sort((a, b) => a.priority - b.priority)
-    .slice(0, 3)
-
   return (
     <div className="px-4 lg:px-20 h-[100vh] lg:h-[100vh]">
       <div className="flex justify-center py-12">
@@ -37,7 +32,7 @@ function OurProducts() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {topThree.map((product) => (
+        {products.map((product) => (
           <Link
             key={product._id}
             href={`/client/products/${product.slug}`}

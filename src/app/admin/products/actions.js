@@ -23,6 +23,30 @@ export async function getProducts() {
   }
 }
 
+export async function getTopThreeProducts() {
+  try {
+    await dbConnect()
+    const products = await Product.find().lean()
+
+    const topThree = [...products]
+      .sort((a, b) => a.priority - b.priority)
+      .slice(0, 3)
+
+    const productsJSON = JSON.parse(JSON.stringify(topThree))
+    return {
+      status: 'success',
+      message: 'Products fetched successfully',
+      data: productsJSON,
+    }
+  } catch (error) {
+    console.error('Error fetching products:', error)
+    return {
+      status: 'error',
+      message: 'Failed to fetch products. Please try again.',
+    }
+  }
+}
+
 export async function addProduct(formData) {
   try {
     await dbConnect()
