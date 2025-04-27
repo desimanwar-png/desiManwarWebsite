@@ -1,25 +1,7 @@
-import { getMembers } from '@/app/admin/members/actions'
 import MemberCard from '@/components/MemberCard'
 import React from 'react'
 
-export const dynamic = 'force-dynamic'
-
-async function fetchSortedMembers() {
-  try {
-    const response = await getMembers()
-    if (response.status === 'success') {
-      return response.data.sort((a, b) => a.priority - b.priority)
-    }
-    return []
-  } catch (error) {
-    console.error('Error fetching members:', error)
-    return []
-  }
-}
-
-async function OurMembers() {
-  const members = await fetchSortedMembers()
-
+function OurMembers({ members }) {
   return (
     <div className="px-4 lg:px-20 pt-12 lg:pt-6">
       <div className="py-20">

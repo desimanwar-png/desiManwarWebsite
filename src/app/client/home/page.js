@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import HeroSectionCarousel from './HeroSectionCarousel'
 import { Blend, Headset, ShieldCheck, Truck } from 'lucide-react'
 import AboutUs from './AboutUs'
@@ -6,6 +8,8 @@ import OurProducts from './OurProducts'
 import WhyUs from './WhyUs'
 import OurMembers from './OurMembers'
 import Testimonials from './Testimonials'
+import { getTopThreeProducts } from '@/app/admin/products/actions'
+import { getMembersByPriority } from '@/app/admin/members/actions'
 
 const points = [
   {
@@ -51,6 +55,21 @@ const points = [
 ]
 
 function HomePage() {
+  const [members, setMembers] = useState([])
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const resMembers = await getMembersByPriority()
+      const resProducts = await getTopThreeProducts()
+
+      setMembers(resMembers.data)
+      setProducts(resProducts.data)
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <div className="">
       {/* <div className="px-4 lg:px-20"> */}
@@ -74,9 +93,9 @@ function HomePage() {
         ))}
       </div>
       <AboutUs />
-      <OurProducts />
+      <OurProducts products={products} />
       <WhyUs />
-      <OurMembers />
+      <OurMembers members={members} />
       <Testimonials />
     </div>
   )

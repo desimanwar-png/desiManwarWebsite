@@ -1,28 +1,9 @@
-'use client'
-
-import { getTopThreeProducts } from '@/app/admin/products/actions'
 import Card from '@/components/Card'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React from 'react'
 
-function OurProducts() {
-  const [products, setProducts] = React.useState([])
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const result = await getTopThreeProducts()
-
-      if (result.status === 'success') {
-        setProducts(result.data)
-      } else {
-        console.error('Failed to fetch products:', result.message)
-      }
-    }
-
-    fetchProducts()
-  }, [])
-
+function OurProducts({ products }) {
   return (
     <div className="px-4 lg:px-20 h-[100vh] lg:h-[100vh]">
       <div className="flex justify-center py-12">
