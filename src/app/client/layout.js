@@ -4,10 +4,11 @@ import ClientNav from './ClientNav'
 import { ArrowRight, Copyright } from 'lucide-react'
 import Button from '@/components/Button'
 import Footer from './Footer'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 function RootLayout({ children }) {
   return (
-    <div>
+    <div className="relative">
       <div className="h-16 flex place-content-center tracking-wider font-bold px-4 lg:px-20 z-50">
         <div className="flex place-items-center text-primary-dark ">
           <Link href="tel:+918290445443">
@@ -48,6 +49,15 @@ function RootLayout({ children }) {
             @shutosh
           </Link>
         </div>
+      </div>
+
+      <div className="fixed bottom-4 right-4 z-50 hover:scale-105 transition-all ease-in-out">
+        <Link href="https://api.whatsapp.com/send/?phone=%2B918290445443&text&type=phone_number&app_absent=0">
+          <Avatar className="h-16 w-16">
+            <AvatarImage src="/images/whatsapp_logo.png" alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </Link>
       </div>
     </div>
   )
