@@ -3,10 +3,15 @@
 import dbConnect from '@/lib/dbConnect'
 import Product from '@/models/Product'
 
-export async function getProducts() {
+export async function getProducts(filter) {
+  let products = []
   try {
     await dbConnect()
-    const products = await Product.find().lean()
+    if (filter === 'all') {
+      products = await Product.find().lean()
+    } else {
+      products = await Product.find({ category: filter }).lean()
+    }
 
     const productsJSON = JSON.parse(JSON.stringify(products))
     return {

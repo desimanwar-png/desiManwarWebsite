@@ -11,12 +11,14 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
+  const resolvedParams = await params
   return {
-    title: `${params.slug} | Product Details`,
+    title: `${resolvedParams.slug} | Product Details`,
   }
 }
 
-async function ProductBySlugPage({ params }) {
+async function ProductBySlugPage({ params: rawParams }) {
+  const params = await rawParams
   await dbConnect()
   const product = await Product.findOne({ slug: params.slug }).lean()
 
