@@ -22,7 +22,7 @@ function OurProducts() {
   }, [])
 
   return (
-    <div className="px-4 lg:px-20 h-[100vh] lg:h-[100vh]">
+    <div className="px-4 lg:px-20">
       <div className="flex justify-center py-12">
         <h1 className="text-3xl lg:text-5xl font-semibold">
           _ Our Top Products _

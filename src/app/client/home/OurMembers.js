@@ -27,7 +27,7 @@ function OurMembers() {
           <span className="text-accent-base pl-2 lg:pl-4"> Members _</span>
         </h1>
 
-        <div className="pt-16 pb-8 flex items-center gap-8">
+        <div className="pt-16 pb-8 flex flex-col lg:flex-row items-center gap-8">
           {members.length > 0 ? (
             members.map((member) => (
               <MemberCard key={member._id} member={member} />
