@@ -2,6 +2,7 @@
 
 import { getProducts } from '@/app/admin/products/actions'
 import Card from '@/components/Card'
+import { SkeletonCard } from '@/components/SkeletonCard'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
@@ -19,9 +20,11 @@ const categories = [
 function ProductsPage() {
   const [products, setProducts] = useState([])
   const [filter, setFilter] = useState('all')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true)
       const result = await getProducts(filter)
 
       if (result.status === 'success') {
@@ -29,6 +32,7 @@ function ProductsPage() {
       } else {
         console.error('Failed to fetch products:', result.message)
       }
+      setLoading(false)
     }
 
     fetchProducts()
@@ -36,6 +40,7 @@ function ProductsPage() {
 
   return (
     <div>
+      {/* Banner Section */}
       <div className="relative">
         <Image
           src="/images/our-products.jpg"
@@ -55,6 +60,8 @@ function ProductsPage() {
           </div>
         </div>
       </div>
+
+      {/* Filter Section */}
       <div className="px-4 lg:px-20 py-4 flex flex-col lg:flex-row items-baseline">
         <h1 className="text-xl font-semibold pr-12">Filters </h1>
         <ToggleGroup
@@ -81,8 +88,16 @@ function ProductsPage() {
           ))}
         </ToggleGroup>
       </div>
+
+      {/* Products / Skeleton Section */}
       <div className="px-4 lg:px-20 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.length > 0 ? (
+        {loading ? (
+          // While loading, show 6 SkeletonCards
+          Array.from({ length: 6 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
+        ) : products.length > 0 ? (
+          // After loading, show real products
           products.map((product, index) => (
             <Link
               key={product._id}
@@ -99,7 +114,7 @@ function ProductsPage() {
             </Link>
           ))
         ) : (
-          <div className="text-center text-lg font-semibold">
+          <div className="text-center text-lg font-semibold col-span-3">
             No products found.
           </div>
         )}

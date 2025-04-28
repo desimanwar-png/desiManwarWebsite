@@ -65,7 +65,7 @@ function ClientNav() {
         {navElements.map((element, index) => (
           <Link
             key={index}
-            href={slugify(element, { lower: true })}
+            href={`/client/${slugify(element, { lower: true })}`} // 👈 add '/client/' here
             onClick={handleNavbar}
           >
             <div
