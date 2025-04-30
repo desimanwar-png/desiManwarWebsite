@@ -3,7 +3,7 @@
 import dbConnect from '@/lib/dbConnect'
 import Product from '@/models/Product'
 
-export async function getProducts(filter) {
+export async function getProducts(filter = 'all') {
   let products = []
   try {
     await dbConnect()
