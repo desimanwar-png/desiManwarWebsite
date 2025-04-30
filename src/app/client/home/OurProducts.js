@@ -5,17 +5,21 @@ import Card from '@/components/Card'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { SkeletonCard } from '@/components/SkeletonCard'
 
 function OurProducts() {
+  const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState([])
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true)
       const resProducts = await getTopThreeProducts()
 
       if (resProducts) {
         setProducts(resProducts.data)
       }
+      setLoading(false)
     }
 
     fetchData()
@@ -30,7 +34,11 @@ function OurProducts() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {products.length > 0 ? (
+        {loading ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
+        ) : products.length > 0 ? (
           products.map((product) => (
             <Link
               key={product._id}

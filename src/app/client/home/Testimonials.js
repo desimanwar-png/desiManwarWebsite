@@ -137,13 +137,13 @@ function Testimonials() {
           </CarouselContent>
         </Carousel>
         <Sheet>
-          <SheetTrigger asChild>
-            <div className="w-full flex justify-end cursor-pointer">
-              <span className="inline-block lg:text-xl font-semibold tracking-wide hover:text-accent-base hover:scale-105 transition-transform ease-in-out">
+          <div className="w-full flex justify-end">
+            <SheetTrigger asChild>
+              <span className="inline-block lg:text-xl font-semibold tracking-wide cursor-pointer hover:text-accent-base hover:scale-105 transition-transform ease-in-out">
                 Share Your Experience
               </span>
-            </div>
-          </SheetTrigger>
+            </SheetTrigger>
+          </div>
 
           <SheetContent side="right" className="space-y-4 p-6">
             <SheetHeader>
