@@ -84,8 +84,6 @@ function Testimonials() {
     fetchData()
   }, [])
 
-  console.log(testimonials)
-
   return (
     <div className="px-4 lg:px-20 bg-primary-dark pt-16 py-20">
       <div className="flex justify-center text-4xl lg:text-7xl font-semibold pb-6 bg-gradient-to-tr from-primary-base to-accent-base bg-clip-text text-transparent">
