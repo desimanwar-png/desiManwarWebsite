@@ -114,27 +114,43 @@ function Footer() {
           <h3 className="text-xl font-semibold text-primary-base mb-4">
             Services
           </h3>
-          <ul className="space-y-2">
-            <li className="flex items-center gap-2">
-              <CircleChevronRight size={20} />
-              Global Shipping Solutions
-            </li>
-            <li className="flex items-center gap-2">
-              <CircleChevronRight size={20} />
-              Eco-Friendly Packaging
-            </li>
-            <li className="flex items-center gap-2">
-              <CircleChevronRight size={20} />
-              Certified Quality
-            </li>
-            <li className="flex items-center gap-2">
-              <CircleChevronRight size={20} />
-              Bulk Orders
-            </li>
-            <li className="flex items-center gap-2">
-              <CircleChevronRight size={20} />
-              Authentic Flavours
-            </li>
+          <ul className="flex flex-col gap-4">
+            <Link
+              href={'/client/our-services'}
+              className="cursor-pointer hover:text-accent-base transition-all"
+            >
+              <li className="flex items-center gap-2">
+                <CircleChevronRight size={20} />
+                Global Sourcing & Export
+              </li>
+            </Link>
+            <Link
+              href={'/client/our-services'}
+              className="cursor-pointer hover:text-accent-base transition-all"
+            >
+              <li className="flex items-center gap-2">
+                <CircleChevronRight size={20} />
+                Private Label & Custom Packaging
+              </li>
+            </Link>
+            <Link
+              href={'/client/our-services'}
+              className="cursor-pointer hover:text-accent-base transition-all"
+            >
+              <li className="flex items-center gap-2">
+                <CircleChevronRight size={20} />
+                Wholesale & Bulk Supply
+              </li>
+            </Link>
+            <Link
+              href={'/client/our-services'}
+              className="cursor-pointer hover:text-accent-base transition-all"
+            >
+              <li className="flex items-center gap-2">
+                <CircleChevronRight size={20} />
+                Trade Consulting & Docs Support
+              </li>
+            </Link>
           </ul>
         </div>
 
@@ -145,22 +161,23 @@ function Footer() {
           </h3>
           <ul className="space-y-2">
             <li className="hover:text-accent-base transition-colors">
-              {/* // TODO: Add herf  */}
-              <Link href="/" className="flex items-center gap-2">
+              <Link href="/client/about-us" className="flex items-center gap-2">
                 <ChevronsRight size={20} />
                 About Us
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
               {/* // TODO: Add herf  */}
-              <Link href="/" className="flex items-center gap-2">
+              <Link href="/client/faq" className="flex items-center gap-2">
                 <ChevronsRight size={20} />
-                Contact Us
+                FAQ{' '}
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
-              {/* // TODO: Add herf  */}
-              <Link href="/" className="flex items-center gap-2">
+              <Link
+                href="/client/our-services"
+                className="flex items-center gap-2"
+              >
                 <ChevronsRight size={20} />
                 Our Services
               </Link>

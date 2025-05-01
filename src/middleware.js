@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-function middleware(req) {
+export function middleware(req) {
   const { pathname } = req.nextUrl
 
   const accessToken = req.cookies.get('accessToken')?.value
@@ -19,11 +19,7 @@ function middleware(req) {
   return NextResponse.next()
 }
 
-const config = {
+export const config = {
   matcher: '/admin/:path*',
-}
-
-module.exports = {
-  middleware,
-  config,
+  runtime: 'edge',
 }
