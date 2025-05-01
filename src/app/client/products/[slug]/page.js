@@ -49,12 +49,12 @@ async function ProductBySlugPage({ params: rawParams }) {
               <span className="font-semibold">Category:</span>{' '}
               {product.category}
             </p>
-            {product.pricePerKg.amount && (
+            {/* {product.pricePerKg.amount && (
               <p>
                 <span className="font-semibold">Price/Kg:</span>{' '}
                 {product.pricePerKg.amount} {product.pricePerKg.currency}
               </p>
-            )}
+            )} */}
             <p>
               <span className="font-semibold">Certified:</span>{' '}
               {product.isFSSAICertified ? 'Yes' : 'No'}
@@ -72,7 +72,8 @@ async function ProductBySlugPage({ params: rawParams }) {
                     key={idx}
                     className="bg-primary-base dark:bg-secondary-dark p-3 rounded"
                   >
-                    <strong>{spec.title}:</strong> {spec.value}
+                    <strong>{spec.title}:</strong>{' '}
+                    <span className="text-primary-base/75">{spec.value}</span>
                   </li>
                 ))}
               </ul>
