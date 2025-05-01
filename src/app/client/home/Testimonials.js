@@ -28,7 +28,7 @@ import {
   getTestimonials,
 } from '@/app/admin/testimonials/actions'
 import { toast } from '@/hooks/use-toast'
-import { Star, Star as StarOutline } from 'lucide-react'
+import { Quote, Star, Star as StarOutline } from 'lucide-react'
 
 const plugin = Autoplay({ delay: 3000 })
 
@@ -84,6 +84,8 @@ function Testimonials() {
     fetchData()
   }, [])
 
+  console.log(testimonials)
+
   return (
     <div className="px-4 lg:px-20 bg-primary-dark pt-16 py-20">
       <div className="flex justify-center text-4xl lg:text-7xl font-semibold pb-6 bg-gradient-to-tr from-primary-base to-accent-base bg-clip-text text-transparent">
@@ -103,7 +105,8 @@ function Testimonials() {
                 <div className="p-1">
                   <Card className="w-full rounded-lg">
                     <CardContent className="flex flex-col gap-2 items-center text-center p-6">
-                      {testimonial.profileImage && (
+                      {testimonial.profileImage &&
+                      testimonial.profileImage !== '/images/dummyImage.jpg' ? (
                         <Image
                           src={testimonial.profileImage}
                           alt={testimonial.name}
@@ -111,7 +114,10 @@ function Testimonials() {
                           height={64}
                           className="rounded-full object-cover w-32 h-32"
                         />
+                      ) : (
+                        <Quote className="w-32 h-32 p-8 text-accent-base" />
                       )}
+
                       <p className="text-lg dark:text-primary-base font-semibold">
                         {testimonial.name}
                       </p>
@@ -149,7 +155,7 @@ function Testimonials() {
             <SheetHeader>
               <SheetTitle>Write a Testimonial</SheetTitle>
               <SheetDescription>
-                We'd love to hear what you think about our products.
+                We would love to hear what you think about our products.
               </SheetDescription>
             </SheetHeader>
 
