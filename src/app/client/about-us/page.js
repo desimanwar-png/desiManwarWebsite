@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import AboutUs from '../home/AboutUs'
 import OurMembers from '../home/OurMembers'
+import OurMission from './OurMission'
 
 const points = [
   {
@@ -90,7 +91,7 @@ function AboutUsPage() {
           </div>
         ))}
       </div>
-      <AboutUs />
+      <OurMission />
       <OurMembers />
       {/* <div className="px-4 lg:px-20 h-screen"></div> */}
     </div>
