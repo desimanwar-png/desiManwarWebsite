@@ -8,7 +8,7 @@ export async function getProducts(filter = 'all') {
   try {
     await dbConnect()
     if (filter === 'all') {
-      products = await Product.find().lean()
+      products = await Product.find().sort({ priority: 1 }).lean()
     } else {
       products = await Product.find({ category: filter }).lean()
     }
