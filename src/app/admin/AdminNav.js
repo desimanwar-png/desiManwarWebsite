@@ -11,6 +11,7 @@ import {
   Mail,
   Phone,
   MessageSquare,
+  Quote,
 } from 'lucide-react'
 
 const menuItems = [
@@ -25,6 +26,7 @@ const settingsItems = [
   { name: 'NewsLetter Subs', route: '/admin/newsletterSubscriber', icon: Mail },
   { name: 'Contacted Persons', route: '/admin/contactedPerson', icon: Phone },
   { name: 'Testimonials', route: '/admin/testimonials', icon: MessageSquare },
+  { name: 'User Quotes', route: '/admin/userQuotes', icon: Quote },
 ]
 
 const AdminNav = () => {
