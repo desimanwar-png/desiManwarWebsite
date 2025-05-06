@@ -12,6 +12,7 @@ import {
   Phone,
   MessageSquare,
   Quote,
+  TicketCheck,
 } from 'lucide-react'
 
 const menuItems = [
@@ -23,6 +24,7 @@ const settingsItems = [
   { name: 'Users', route: '/admin/users', icon: Users },
   { name: 'Members', route: '/admin/members', icon: Users },
   { name: 'Products', route: '/admin/products', icon: ShoppingCart },
+  { name: 'Certificates', route: '/admin/certificates', icon: TicketCheck },
   { name: 'NewsLetter Subs', route: '/admin/newsletterSubscriber', icon: Mail },
   { name: 'Contacted Persons', route: '/admin/contactedPerson', icon: Phone },
   { name: 'Testimonials', route: '/admin/testimonials', icon: MessageSquare },

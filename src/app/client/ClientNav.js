@@ -8,7 +8,13 @@ import { MenuIcon, X } from 'lucide-react'
 import slugify from 'slugify'
 
 function ClientNav() {
-  const navElements = ['Home', 'About Us', 'Products', 'Contact']
+  const navElements = [
+    'Home',
+    'Products',
+    'Certificates',
+    'About Us',
+    'Contact',
+  ]
   const currentRoute = usePathname().split('/')[2]
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
 
