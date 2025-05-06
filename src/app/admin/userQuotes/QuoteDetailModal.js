@@ -77,6 +77,12 @@ function QuoteDetailsModal({ quote, onClose }) {
           </div>
           <div className="bg-muted p-3 rounded-md">
             <div className="text-muted-foreground font-semibold">
+              Shipping Terms
+            </div>
+            <div>{quote.shippingTerms || 'Empty'}</div>
+          </div>
+          <div className="bg-muted p-3 rounded-md">
+            <div className="text-muted-foreground font-semibold">
               Delivery Timeline
             </div>
             <div>{quote.deliveryTimeline || 'Empty'}</div>

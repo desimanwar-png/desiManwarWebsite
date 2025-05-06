@@ -25,6 +25,9 @@ const quoteSchema = new mongoose.Schema({
   paymentTerms: {
     type: String,
   },
+  shippingTerms: {
+    type: String,
+  },
   deliveryTimeline: {
     type: String,
   },
@@ -36,5 +39,9 @@ const quoteSchema = new mongoose.Schema({
     default: Date.now,
   },
 })
+
+if (mongoose.models['Quote']) {
+  delete mongoose.models['Quote']
+}
 
 export default mongoose.models.Quote || mongoose.model('Quote', quoteSchema)

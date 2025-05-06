@@ -169,6 +169,30 @@ function GetAQuotePage() {
               </div>
               <div>
                 <label className="block text-secondary-base">
+                  Preferred Shipping Terms
+                </label>
+                <select
+                  name="shippingTerms"
+                  className="w-full p-2 rounded bg-primary-base/90 text-secondary-dark"
+                >
+                  <option value="">Select</option>
+                  <option value="FOB">FOB (Free on Board)</option>
+                  <option value="CIF">
+                    CIF (Cost, Insurance, and Freight)
+                  </option>
+                  <option value="CFR">CFR (Cost and Freight)</option>
+                  <option value="DDP">DDP (Delivered Duty Paid)</option>
+                  <option value="DAP">DAP (Delivered at Place)</option>
+                  <option value="EXW">EXW (Ex Works)</option>
+                  <option value="FCA">FCA (Free Carrier)</option>
+                  <option value="Other">
+                    Other (please specify in message)
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-secondary-base">
                   Required Delivery Timeline
                 </label>
                 <input

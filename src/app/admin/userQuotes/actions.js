@@ -12,6 +12,7 @@ export async function createQuote(formData) {
     quantityRequired: formData.get('quantityRequired'),
     destinationCountry: formData.get('destinationCountry'),
     paymentTerms: formData.get('paymentTerms'),
+    shippingTerms: formData.get('shippingTerms'),
     deliveryTimeline: formData.get('deliveryTimeline'),
     message: formData.get('message'),
   }
