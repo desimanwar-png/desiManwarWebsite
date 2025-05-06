@@ -5,11 +5,13 @@ import { notFound, useParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getProductBySlug } from '@/app/admin/products/actions'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function ProductBySlugPage() {
   const params = useParams()
   const { slug } = params
   const [product, setProduct] = useState({})
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
@@ -20,12 +22,35 @@ function ProductBySlugPage() {
       } else {
         console.error(res.message)
       }
+      setLoading(false)
     }
 
     fetchData()
-  }, [])
+  }, [slug])
 
   if (!product) return notFound()
+
+  if (loading) {
+    return (
+      <div className="px-4 md:px-12 lg:px-20 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <Skeleton className="h-[400px] w-full rounded-xl" />
+          <div className="space-y-4">
+            <Skeleton className="h-10 w-3/4" />
+            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-6 w-1/2" />
+            <Skeleton className="h-6 w-2/3" />
+            <div className="grid grid-cols-2 gap-2 pt-4">
+              <Skeleton className="h-16 w-full rounded" />
+              <Skeleton className="h-16 w-full rounded" />
+              <Skeleton className="h-16 w-full rounded" />
+              <Skeleton className="h-16 w-full rounded" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="px-4 md:px-12 lg:px-20 py-8 text-gray-800 dark:text-gray-100">
@@ -52,16 +77,6 @@ function ProductBySlugPage() {
               <span className="font-semibold">Category:</span>{' '}
               {product.category}
             </p>
-            {/* {product.pricePerKg.amount && (
-              <p>
-                <span className="font-semibold">Price/Kg:</span>{' '}
-                {product.pricePerKg.amount} {product.pricePerKg.currency}
-              </p>
-            )} */}
-            {/* <p>
-              <span className="font-semibold">Certified:</span>{' '}
-              {product.isFSSAICertified ? 'Yes' : 'No'}
-            </p> */}
             <div className="py-2">
               <span className="font-semibold">One Pager URL - </span>
               {product.onePagerURL ? (
