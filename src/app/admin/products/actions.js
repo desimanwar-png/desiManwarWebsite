@@ -65,6 +65,8 @@ export async function addProduct(formData) {
     const isFSSAICertified = formData.get('isFSSAICertified') === 'on'
     const priceAmount = parseFloat(formData.get('pricePerKg.amount')) || 0
     const priceCurrency = formData.get('pricePerKg.currency') || 'USD'
+    const onePagerURL = formData.get('onePagerURL') || ''
+    const coaReportURL = formData.get('coaReportURL') || ''
 
     if (!name || !description || !category || !slug) {
       return { status: 'error', message: 'Missing required fields.' }
@@ -86,13 +88,17 @@ export async function addProduct(formData) {
       image,
       isFSSAICertified,
       priority,
+      onePagerURL,
+      coaReportURL,
       pricePerKg: {
         amount: priceAmount,
         currency: priceCurrency,
       },
     })
 
-    await newProduct.save()
+    const saved = await newProduct.save()
+
+    console.log('Saved Product:', saved)
 
     return { status: 'success', message: 'Product added successfully!' }
   } catch (error) {

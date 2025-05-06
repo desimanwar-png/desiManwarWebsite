@@ -192,6 +192,23 @@ export default function ProductEditModal({
               onChange={handleChange}
             />
           </div>
+          <div>
+            <Label>One Pager URL</Label>
+            <Input
+              name="onePagerURL"
+              value={formData.onePagerURL}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <Label>COA Report URL</Label>
+            <Input
+              name="coaReportURL"
+              value={formData.coaReportURL}
+              onChange={handleChange}
+            />
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>Price (Amount)</Label>

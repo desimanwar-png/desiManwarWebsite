@@ -50,6 +50,14 @@ const productSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  onePagerURL: {
+    type: String,
+    default: '',
+  },
+  coaReportURL: {
+    type: String,
+    default: '',
+  },
   isFSSAICertified: {
     type: Boolean,
     default: false,

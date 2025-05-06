@@ -92,34 +92,3 @@ function ProductsPage() {
 }
 
 export default ProductsPage
-
-{
-  /* <TableRow key={product._id}>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>{product.description}</TableCell>
-                  <TableCell>{product.category}</TableCell>
-                  <TableCell>{product.subCategory}</TableCell>
-                  <TableCell>{product.priority}</TableCell>
-                  <TableCell>
-                    {product.pricePerKg.amount} {product.pricePerKg.currency}
-                  </TableCell>
-                  <TableCell>
-                    <Image
-                      src={product.image || '/images/dummyImage.jpg'}
-                      alt={product.name}
-                      className="w-16 h-16 object-cover rounded-md"
-                      width={64}
-                      height={64}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <div
-                      className="text-red-700 ml-2 hover:text-red-400 cursor-pointer"
-                      onClick={() => handleProductDelete(product._id)}
-                    >
-                      <Trash2 />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )) */
-}

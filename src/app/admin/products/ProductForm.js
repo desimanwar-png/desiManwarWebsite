@@ -181,6 +181,26 @@ function ProductForm({ onProductAdded }) {
               </div>
               <div>
                 <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
+                  One Pager URL
+                </Label>
+                <input
+                  type="text"
+                  name="onePagerURL"
+                  className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
+                />
+              </div>
+              <div>
+                <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
+                  COA Report URL
+                </Label>
+                <input
+                  type="text"
+                  name="coaReportURL"
+                  className="w-full rounded-md border p-2 text-primary-dark focus:border-secondary-dark focus:ring-secondary-dark"
+                />
+              </div>
+              <div>
+                <Label className="block text-sm text-primary-dark dark:text-primary-base mb-2">
                   FSSAI Certified
                 </Label>
                 <input type="checkbox" name="isFSSAICertified" />

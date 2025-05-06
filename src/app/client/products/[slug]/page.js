@@ -1,8 +1,11 @@
+'use server'
+
 import React from 'react'
 import dbConnect from '@/lib/dbConnect'
 import Product from '@/models/Product'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export async function generateStaticParams() {
   await dbConnect()
@@ -44,8 +47,8 @@ async function ProductBySlugPage({ params: rawParams }) {
           </h1>
           <p className="text-lg">{product.description}</p>
 
-          <div className="text-sm space-y-1">
-            <p>
+          <div className="text-sm">
+            <p className="py-2">
               <span className="font-semibold">Category:</span>{' '}
               {product.category}
             </p>
@@ -55,10 +58,39 @@ async function ProductBySlugPage({ params: rawParams }) {
                 {product.pricePerKg.amount} {product.pricePerKg.currency}
               </p>
             )} */}
-            <p>
+            {/* <p>
               <span className="font-semibold">Certified:</span>{' '}
               {product.isFSSAICertified ? 'Yes' : 'No'}
-            </p>
+            </p> */}
+            <div className="py-2">
+              <span className="font-semibold">One Pager URL - </span>
+              {product.onePagerURL ? (
+                <Link
+                  href={product.onePagerURL}
+                  className="text-accent-base"
+                  target="_blank"
+                >
+                  Link
+                </Link>
+              ) : (
+                <span className="text-muted-foreground">Coming Soon</span>
+              )}
+            </div>
+
+            <div className="py-2">
+              <span className="font-semibold">COA Report URL - </span>
+              {product.coaReportURL ? (
+                <Link
+                  href={product.coaReportURL}
+                  className="text-accent-base"
+                  target="_blank"
+                >
+                  Link
+                </Link>
+              ) : (
+                <span className="text-muted-foreground">Coming Soon</span>
+              )}
+            </div>
           </div>
 
           {product.specification?.length > 0 && (
