@@ -52,6 +52,33 @@ export async function getTopThreeProducts() {
   }
 }
 
+export async function getProductBySlug(slug) {
+  try {
+    await dbConnect()
+    const product = await Product.find({ slug }).lean()
+
+    const productJSON = JSON.parse(JSON.stringify(product))
+
+    if (!productJSON) {
+      return {
+        status: 'error',
+        message: 'Product not found',
+      }
+    }
+
+    return {
+      status: 'success',
+      message: 'Product fetched successfully',
+      data: productJSON,
+    }
+  } catch (error) {
+    return {
+      status: 'error',
+      message: 'Failed to fetch product. Please try again.',
+    }
+  }
+}
+
 export async function addProduct(formData) {
   try {
     await dbConnect()

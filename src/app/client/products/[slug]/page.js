@@ -1,29 +1,29 @@
-'use server'
+'use client'
 
-import React from 'react'
-import dbConnect from '@/lib/dbConnect'
-import Product from '@/models/Product'
-import { notFound } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { notFound, useParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getProductBySlug } from '@/app/admin/products/actions'
 
-export async function generateStaticParams() {
-  await dbConnect()
-  const products = await Product.find({}, 'slug')
-  return products.map((p) => ({ slug: p.slug }))
-}
+function ProductBySlugPage() {
+  const params = useParams()
+  const { slug } = params
+  const [product, setProduct] = useState({})
 
-export async function generateMetadata({ params }) {
-  const resolvedParams = await params
-  return {
-    title: `${resolvedParams.slug} | Product Details`,
-  }
-}
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getProductBySlug(slug)
 
-async function ProductBySlugPage({ params: rawParams }) {
-  const params = await rawParams
-  await dbConnect()
-  const product = await Product.findOne({ slug: params.slug }).lean()
+      if (res.status === 'success') {
+        setProduct(res.data[0])
+      } else {
+        console.error(res.message)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   if (!product) return notFound()
 
