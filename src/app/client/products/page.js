@@ -52,10 +52,10 @@ function ProductsPage() {
         <div className="absolute top-0 bg-gradient-to-l from-secondary-dark to-transparent w-full aspect-video">
           <div className="h-full flex items-center px-4 lg:px-20">
             <h1 className="text-4xl lg:text-8xl text-secondary-dark font-bold ">
+              Our{' '}
               <span className="bg-gradient-to-tr from-primary-base to-accent-base bg-clip-text text-transparent">
-                Our{' '}
+                Products
               </span>
-              Products
             </h1>
           </div>
         </div>

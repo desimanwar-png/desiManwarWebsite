@@ -11,6 +11,7 @@ function ClientNav() {
   const navElements = [
     'Home',
     'Products',
+    'Commodity',
     'Certificates',
     'About Us',
     'Contact',
@@ -64,7 +65,7 @@ function ClientNav() {
         <MenuIcon />
       </div>
       <div
-        className={`flex items-center justify-center lg:justify-end m-auto mr-0 bg-primary-base dark:bg-secondary-dark h-[100vh] top-0 w-full absolute flex-col lg:flex-row lg:relative lg:dark:bg-secondary-dark lg:h-12 lg:w-[40.1vw] transition-all ease-in-out ${
+        className={`flex items-center justify-center lg:justify-end m-auto mr-0 bg-primary-base dark:bg-secondary-dark h-[100vh] top-0 w-full absolute flex-col lg:flex-row lg:relative lg:dark:bg-secondary-dark lg:h-12 lg:w-[42vw] transition-all ease-in-out ${
           isNavbarOpen ? 'left-0' : '-left-[100%] lg:left-0'
         }`}
       >
