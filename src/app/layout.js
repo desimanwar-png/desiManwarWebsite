@@ -1,9 +1,13 @@
 import { Toaster } from '@/components/ui/toaster'
 import './globals.css'
+import { icons } from 'lucide-react'
 
 export const metadata = {
   title: 'Desi Manwar',
   description: 'Desi Manwar Website',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({ children }) {
