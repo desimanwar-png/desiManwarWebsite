@@ -116,7 +116,7 @@ function Footer() {
           </h3>
           <ul className="flex flex-col gap-4">
             <Link
-              href={'/client/our-services'}
+              href={'/our-services'}
               className="cursor-pointer hover:text-accent-base transition-all"
             >
               <li className="flex items-center gap-2">
@@ -125,7 +125,7 @@ function Footer() {
               </li>
             </Link>
             <Link
-              href={'/client/our-services'}
+              href={'/our-services'}
               className="cursor-pointer hover:text-accent-base transition-all"
             >
               <li className="flex items-center gap-2">
@@ -134,7 +134,7 @@ function Footer() {
               </li>
             </Link>
             <Link
-              href={'/client/our-services'}
+              href={'/our-services'}
               className="cursor-pointer hover:text-accent-base transition-all"
             >
               <li className="flex items-center gap-2">
@@ -143,7 +143,7 @@ function Footer() {
               </li>
             </Link>
             <Link
-              href={'/client/our-services'}
+              href={'/our-services'}
               className="cursor-pointer hover:text-accent-base transition-all"
             >
               <li className="flex items-center gap-2">
@@ -161,30 +161,26 @@ function Footer() {
           </h3>
           <ul className="space-y-2">
             <li className="hover:text-accent-base transition-colors">
-              <Link href="/client/about-us" className="flex items-center gap-2">
+              <Link href="/about-us" className="flex items-center gap-2">
                 <ChevronsRight size={20} />
                 About Us
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
-              {/* // TODO: Add herf  */}
-              <Link href="/client/faq" className="flex items-center gap-2">
+              <Link href="/faq" className="flex items-center gap-2">
                 <ChevronsRight size={20} />
                 FAQ{' '}
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
-              <Link
-                href="/client/our-services"
-                className="flex items-center gap-2"
-              >
+              <Link href="/our-services" className="flex items-center gap-2">
                 <ChevronsRight size={20} />
                 Our Services
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
               <Link
-                href="/client/terms-and-conditions"
+                href="/terms-and-conditions"
                 className="flex items-center gap-2"
               >
                 <ChevronsRight size={20} />
@@ -192,10 +188,7 @@ function Footer() {
               </Link>
             </li>
             <li className="hover:text-accent-base transition-colors">
-              <Link
-                href="/client/privacy-policy"
-                className="flex items-center gap-2"
-              >
+              <Link href="/privacy-policy" className="flex items-center gap-2">
                 <ChevronsRight size={20} />
                 Privacy Policy
               </Link>
