@@ -60,12 +60,12 @@ function Footer() {
             </li>
             <li className="flex items-center mb-2">
               <Link
-                href="mailto:desimanwar@gmail.com"
+                href="mailto:info@desimanwar.com"
                 className="flex items-center"
               >
                 <Mail className="w-5 h-5 mr-2 text-accent-base" />
                 <span className="hover:text-accent-base transition-colors">
-                  desimanwar@gmail.com
+                  info@desimanwar.com
                 </span>
               </Link>
             </li>

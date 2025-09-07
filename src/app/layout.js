@@ -27,9 +27,9 @@ export default function RootLayout({ children }) {
                   +91 82904 45443
                 </div>
               </Link>
-              <Link href="mailto:desimanwar@gmail.com">
+              <Link href="mailto:info@desimanwar.com">
                 <div className="hidden hover:text-black hover:dark:text-primary-base cursor-pointer lg:flex">
-                  desimanwar@gmail.com
+                  info@desimanwar.com
                 </div>
               </Link>
             </div>
