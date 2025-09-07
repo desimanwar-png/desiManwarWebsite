@@ -101,7 +101,7 @@ function ProductsPage() {
           products.map((product, index) => (
             <Link
               key={product._id}
-              href={`/client/products/${product.slug}`}
+              href={`/products/${product.slug}`}
               className="hover:scale-105 transition-all ease-in-out"
             >
               <Card

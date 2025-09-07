@@ -42,7 +42,7 @@ function OurProducts() {
           products.map((product) => (
             <Link
               key={product._id}
-              href={`/client/products/${product.slug}`}
+              href={`/products/${product.slug}`}
               className="hover:scale-105 transition-all ease-in-out"
             >
               <Card
@@ -62,7 +62,7 @@ function OurProducts() {
 
       <div className="w-full py-4 dark:text-secondary-base hover:text-secondary-base dark:hover:text-accent-base mb-24">
         <Link
-          href="/client/products"
+          href="/products"
           className="float-end flex gap-2 hover:scale-105 transition-all ease-in-out text-xl cursor-pointer mx-2"
         >
           See More <ArrowRight size={25} />
