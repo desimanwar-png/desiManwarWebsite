@@ -46,8 +46,9 @@ function Footer() {
           <ul>
             <li className="flex items-center mb-2">
               <MapPin className="w-5 h-5 mr-2 text-accent-base" />
-              <span className="hover:text-accent-base transition-colors">
-                Jaipur, Rajasthan, India
+              <span className="hover:text-accent-base transition-colors max-w-[20rem]">
+                Plot no. 3, Park House, Infornt of Akashvani, M.I Road, Jaipur,
+                Rajasthan 302001
               </span>
             </li>
             <li className="flex items-center mb-2">
