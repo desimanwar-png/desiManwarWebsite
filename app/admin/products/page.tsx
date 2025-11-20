@@ -58,12 +58,13 @@ import { Plus, Trash2, Loader2, Package, Edit, X } from 'lucide-react'
 import {
   getAllProducts,
   createProduct,
+  updateProduct,
   deleteProduct,
   getProductById,
 } from './actions'
 
 interface Product {
-  id: string
+  _id: string
   name: string
   category: string
   priority: number
@@ -97,12 +98,13 @@ export default function ProductsPage() {
   const [editFormData, setEditFormData] = useState<any | null>(null)
   const [isUploadingImage, setIsUploadingImage] = useState(false)
 
-  // Form state
-  const [formData, setFormData] = useState({
+  // Form state for Create Product
+  const [createFormData, setCreateFormData] = useState({
     name: '',
     description: '',
     category: '',
     priority: 1000,
+    image: '',
   })
 
   const fetchProducts = async () => {
@@ -110,7 +112,7 @@ export default function ProductsPage() {
     try {
       const productResult = await getAllProducts()
 
-      if (productResult.success && productResult.products) {
+      if (productResult.status === 'success' && productResult.products) {
         setProducts(productResult.products)
       } else {
         toast.error('Failed to load products', {
@@ -133,7 +135,7 @@ export default function ProductsPage() {
   const handleCreateProduct = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.name || !formData.category) {
+    if (!createFormData.name || !createFormData.category) {
       toast.error('Name and Category are required')
       return
     }
@@ -142,15 +144,23 @@ export default function ProductsPage() {
     try {
       toast.loading('Creating product...', { id: 'create-product' })
 
-      const result = await createProduct(formData)
+      const formDataToSend = new FormData()
+      formDataToSend.append('name', createFormData.name)
+      formDataToSend.append('description', createFormData.description)
+      formDataToSend.append('category', createFormData.category)
+      formDataToSend.append('priority', String(createFormData.priority))
+      formDataToSend.append('image', createFormData.image)
 
-      if (result.success) {
+
+      const result = await createProduct(formDataToSend)
+
+      if (result.status === 'success') {
         toast.success('Product created successfully', {
           id: 'create-product',
-          description: `${formData.name} has been added.`,
+          description: `${createFormData.name} has been added.`,
         })
 
-        setFormData({ name: '', description: '', category: '', priority: 1000 })
+        setCreateFormData({ name: '', description: '', category: '', priority: 1000, image: '' })
         setIsSheetOpen(false)
         await fetchProducts()
       } else {
@@ -181,9 +191,9 @@ export default function ProductsPage() {
     try {
       toast.loading('Deleting product...', { id: 'delete-product' })
 
-      const result = await deleteProduct(productToDelete.id)
+      const result = await deleteProduct(productToDelete._id)
 
-      if (result.success) {
+      if (result.status === 'success') {
         toast.success('Product deleted successfully', {
           id: 'delete-product',
           description: `${productToDelete.name} has been removed`,
@@ -209,15 +219,42 @@ export default function ProductsPage() {
 
   const handleUpdateProduct = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!editProduct) return
+    if (!editProduct || !editFormData) return
 
     setIsUpdating(true)
     try {
       toast.loading('Updating product...', { id: 'update-product' })
 
-      const result = await updateProduct(editProduct._id, editFormData)
+      const formDataToSend = new FormData()
+      formDataToSend.append('name', editFormData.name)
+      formDataToSend.append('description', editFormData.description)
+      formDataToSend.append('category', editFormData.category)
+      formDataToSend.append('priority', String(editFormData.priority))
+      formDataToSend.append('image', editFormData.image || '')
+      formDataToSend.append('slug', editFormData.slug)
+      formDataToSend.append('onePagerURL', editFormData.onePagerURL || '')
+      formDataToSend.append('coaReportURL', editFormData.coaReportURL || '')
+      formDataToSend.append('isFSSAICertified', editFormData.isFSSAICertified ? 'on' : 'off');
 
-      if (result.success) {
+
+      // Nested objects
+      formDataToSend.append('pricePerKg.amount', editFormData.pricePerKg?.amount || '')
+      formDataToSend.append('pricePerKg.currency', editFormData.pricePerKg?.currency || 'USD')
+
+      formDataToSend.append('productVisibility', editFormData.visibility?.productVisibility ? 'on' : 'off');
+      formDataToSend.append('priceVisibility', editFormData.visibility?.priceVisibility ? 'on' : 'off');
+      formDataToSend.append('descriptionVisibility', editFormData.visibility?.descriptionVisibility ? 'on' : 'off');
+      formDataToSend.append('specificationVisibility', editFormData.visibility?.specificationVisibility ? 'on' : 'off');
+
+      // Specifications array
+      editFormData.specification?.forEach((spec: any, index: number) => {
+        formDataToSend.append(`specification.title[]`, spec.title);
+        formDataToSend.append(`specification.value[]`, spec.value);
+      });
+
+      const result = await updateProduct(editProduct._id, formDataToSend)
+
+      if (result.status === 'success') {
         toast.success('Product updated successfully', {
           id: 'update-product',
         })
@@ -275,11 +312,45 @@ export default function ProductsPage() {
     }
   }
 
+  const handleCreateImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0]
+
+      if (!validateImageType(file)) {
+        toast.error('Invalid file type. Please select an image.')
+        return
+      }
+
+      if (!validateImageSize(file, 2)) {
+        toast.error('File size exceeds 2MB. Please select a smaller image.')
+        return
+      }
+
+      setIsUploadingImage(true)
+      toast.loading('Uploading image...', { id: 'image-upload' })
+      try {
+        const base64Image = await handleImageUpload(file)
+        setCreateFormData({
+          ...createFormData,
+          image: base64Image,
+        })
+        toast.success('Image uploaded successfully', { id: 'image-upload' })
+      } catch (error) {
+        toast.error('Failed to upload image', {
+          id: 'image-upload',
+          description: 'An unexpected error occurred.',
+        })
+      } finally {
+        setIsUploadingImage(false)
+      }
+    }
+  }
+
   const handleRowClick = async (product: Product) => {
     toast.loading('Fetching product details...', { id: 'fetch-product' })
     try {
-      const result = await getProductById(product.id)
-      if (result.success && result.product) {
+      const result = await getProductById(product._id)
+      if (result.status === 'success' && result.product) {
         setEditProduct(result.product)
         setEditFormData(result.product) // Set form data
         setIsEditSheetOpen(true)
@@ -345,9 +416,9 @@ export default function ProductsPage() {
                     <Input
                       id="name"
                       placeholder="e.g., Raw Turmeric Powder"
-                      value={formData.name}
+                      value={createFormData.name}
                       onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
+                        setCreateFormData({ ...createFormData, name: e.target.value })
                       }
                       disabled={isCreating}
                       required
@@ -365,10 +436,10 @@ export default function ProductsPage() {
                     <Textarea
                       id="description"
                       placeholder="Enter product description"
-                      value={formData.description}
+                      value={createFormData.description}
                       onChange={(e) =>
-                        setFormData({
-                          ...formData,
+                        setCreateFormData({
+                          ...createFormData,
                           description: e.target.value,
                         })
                       }
@@ -386,9 +457,9 @@ export default function ProductsPage() {
                         Category
                       </Label>
                       <Select
-                        value={formData.category}
+                        value={createFormData.category}
                         onValueChange={(value) =>
-                          setFormData({ ...formData, category: value })
+                          setCreateFormData({ ...createFormData, category: value })
                         }
                         disabled={isCreating}
                       >
@@ -416,16 +487,65 @@ export default function ProductsPage() {
                         id="priority"
                         type="number"
                         placeholder="e.g., 100"
-                        value={formData.priority}
+                        value={createFormData.priority}
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
+                          setCreateFormData({
+                            ...createFormData,
                             priority: parseInt(e.target.value, 10),
                           })
                         }
                         disabled={isCreating}
                         className="h-11 text-base"
                       />
+                    </div>
+                  </div>
+                   <div className="space-y-3">
+                    <Label className="text-base font-semibold">
+                      Product Image
+                    </Label>
+                    <div className="flex items-center gap-6">
+                      <div className="w-32 h-32 relative rounded-md overflow-hidden border">
+                        {createFormData?.image ? (
+                          <Image
+                            src={createFormData.image}
+                            alt={createFormData.name}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground">
+                            No Image
+                          </div>
+                        )}
+                      </div>
+                      <div className="space-y-2">
+                        <Input
+                          id="create-image-upload"
+                          type="file"
+                          className="hidden"
+                          onChange={handleCreateImageChange}
+                          accept="image/*"
+                          disabled={isUploadingImage}
+                        />
+                        <Label
+                          htmlFor="create-image-upload"
+                          className={`cursor-pointer inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ${
+                            isUploadingImage ? 'opacity-50' : ''
+                          }`}
+                        >
+                          {isUploadingImage ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Uploading...
+                            </>
+                          ) : (
+                            'Upload Image'
+                          )}
+                        </Label>
+                        <p className="text-xs text-muted-foreground">
+                          Max 2MB. Recommended 800x800px.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -979,46 +1099,44 @@ export default function ProductsPage() {
         ) : (
           <div className="rounded-md border bg-card">
             <Table>
-                            <TableHeader>
-                              <TableRow>
-                                <TableHead>Image</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Category</TableHead>
-                                <TableHead>Priority</TableHead>
-                                <TableHead>Visible</TableHead>
-                                <TableHead className="hidden sm:table-cell">
-                                  Created At
-                                </TableHead>
-                                <TableHead className="text-right">Actions</TableHead>
-                              </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                              {products.map((product) => (
-                                <TableRow
-                                  key={product.id}
-                                  className="cursor-pointer hover:bg-muted/50"
-                                  onClick={() => handleRowClick(product)}
-                                >
-                                  <TableCell>
-                                    <div className="w-16 h-16 relative rounded-md overflow-hidden border">
-                                      {product.image ? (
-                                        <Image
-                                          src={product.image}
-                                          alt={product.name}
-                                          fill
-                                          className="object-cover"
-                                        />
-                                      ) : (
-                                        <div className="w-full h-full bg-muted flex items-center justify-center text-xs text-muted-foreground">
-                                          No Image
-                                        </div>
-                                      )}
-                                    </div>
-                                  </TableCell>
-                                  <TableCell className="font-medium">
-                                    {product.name}
-                                  </TableCell>
-                                  <TableCell>{product.category}</TableCell>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Image</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Priority</TableHead>
+                  <TableHead>Visible</TableHead>
+                  <TableHead className="hidden sm:table-cell">
+                    Created At
+                  </TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {products.map((product) => (
+                  <TableRow
+                    key={product._id}
+                    className="cursor-pointer hover:bg-muted/50"
+                    onClick={() => handleRowClick(product)}
+                  >
+                    <TableCell>
+                      <div className="w-16 h-16 relative rounded-md overflow-hidden border">
+                        {product.image ? (
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-muted flex items-center justify-center text-xs text-muted-foreground">
+                            No Image
+                          </div>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-medium">{product.name}</TableCell>
+                    <TableCell>{product.category}</TableCell>
                     <TableCell>{product.priority}</TableCell>
                     <TableCell>
                       <Badge

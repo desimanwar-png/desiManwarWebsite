@@ -15,9 +15,8 @@ function slugify(text: string): string {
     .replace(/-+$/, '') // Trim - from end of text
 }
 
-
 export async function getAllProducts(): Promise<{
-  success: boolean
+  status: 'success' | 'error'
   products?: any[]
   message?: string
 }> {
@@ -29,9 +28,9 @@ export async function getAllProducts(): Promise<{
       .lean()
 
     return {
-      success: true,
+      status: 'success',
       products: products.map((product) => ({
-        id: product._id.toString(),
+        _id: product._id.toString(),
         name: product.name,
         category: product.category,
         priority: product.priority,
@@ -43,169 +42,14 @@ export async function getAllProducts(): Promise<{
   } catch (error) {
     console.error('Get all products error:', error)
     return {
-      success: false,
+      status: 'error',
       message: 'Failed to fetch products',
     }
   }
 }
 
-export async function createProduct(data: {
-  name: string
-  description: string
-  category: string
-  priority: number
-}): Promise<{
-  success: boolean
-  message: string
-  product?: any
-}> {
-  try {
-    if (!data.name || !data.category) {
-      return {
-        success: false,
-        message: 'Name and category are required',
-      }
-    }
-
-    await dbConnect()
-
-    const slug = slugify(data.name)
-    const existingProduct = await Product.findOne({ slug })
-    if (existingProduct) {
-      return {
-        success: false,
-        message: 'A product with this name already exists.',
-      }
-    }
-
-    const newProduct = await Product.create({
-      ...data,
-      slug,
-    })
-
-    revalidatePath('/admin/products')
-
-    return {
-      success: true,
-      message: 'Product created successfully',
-      product: JSON.parse(JSON.stringify(newProduct)),
-    }
-  } catch (error) {
-    console.error('Create product error:', error)
-    return {
-      success: false,
-      message: 'An error occurred while creating the product',
-    }
-  }
-}
-
-export async function updateProduct(
-  productId: string,
-  data: Partial<IProduct>
-): Promise<{
-  success: boolean
-  message: string
-  product?: any
-}> {
-  try {
-    await dbConnect()
-
-    const product = await Product.findById(productId)
-    if (!product) {
-      return {
-        success: false,
-        message: 'Product not found',
-      }
-    }
-
-    // Handle slug regeneration if name changes
-    if (data.name && data.name !== product.name) {
-      const newSlug = slugify(data.name)
-      const existingProduct = await Product.findOne({ slug: newSlug })
-      if (existingProduct && existingProduct._id.toString() !== productId) {
-        return {
-          success: false,
-          message: 'A product with this name already exists.',
-        }
-      }
-      data.slug = newSlug
-    }
-
-    // Sanitize data by removing immutable fields
-    delete data._id
-    delete data.createdAt
-    delete data.__v
-
-    const updatedProduct = await Product.findByIdAndUpdate(
-      productId,
-      { $set: data },
-      { new: true, runValidators: true }
-    ).lean()
-
-    if (!updatedProduct) {
-      return {
-        success: false,
-        message: 'Failed to update product',
-      }
-    }
-
-    revalidatePath('/admin/products')
-    revalidatePath(`/products/${updatedProduct.slug}`)
-
-    return {
-      success: true,
-      message: 'Product updated successfully',
-      product: JSON.parse(JSON.stringify(updatedProduct)),
-    }
-  } catch (error: any) {
-    console.error('Update product error:', error)
-    return {
-      success: false,
-      message: error.message || 'An error occurred while updating the product',
-    }
-  }
-}
-
-export async function deleteProduct(productId: string): Promise<{
-  success: boolean
-  message: string
-}> {
-  try {
-    if (!productId) {
-      return {
-        success: false,
-        message: 'Product ID is required',
-      }
-    }
-
-    await dbConnect()
-
-    const deletedProduct = await Product.findByIdAndDelete(productId)
-
-    if (!deletedProduct) {
-      return {
-        success: false,
-        message: 'Product not found',
-      }
-    }
-
-    revalidatePath('/admin/products')
-
-    return {
-      success: true,
-      message: 'Product deleted successfully',
-    }
-  } catch (error) {
-    console.error('Delete product error:', error)
-    return {
-      success: false,
-      message: 'An error occurred while deleting the product',
-    }
-  }
-}
-
 export async function getProductById(productId: string): Promise<{
-  success: boolean
+  status: 'success' | 'error'
   product?: any
   message?: string
 }> {
@@ -216,20 +60,238 @@ export async function getProductById(productId: string): Promise<{
 
     if (!product) {
       return {
-        success: false,
+        status: 'error',
         message: 'Product not found',
       }
     }
 
     return {
-      success: true,
+      status: 'success',
       product: JSON.parse(JSON.stringify(product)),
     }
   } catch (error) {
     console.error(`Get product by id error: ${error}`)
     return {
-      success: false,
+      status: 'error',
       message: 'Failed to fetch product',
+    }
+  }
+}
+
+export async function createProduct(
+  formData: FormData
+): Promise<{
+  status: 'success' | 'error'
+  message: string
+  product?: any
+}> {
+  try {
+    await dbConnect()
+
+    const name = formData.get('name') as string
+    const description = formData.get('description') as string
+    const category = formData.get('category') as string
+    const priority = parseInt(formData.get('priority') as string) || 1000
+    const image = formData.get('image') as string
+
+    if (!name || !category) {
+      return {
+        status: 'error',
+        message: 'Name and category are required',
+      }
+    }
+
+    const slug = slugify(name)
+    const existingProduct = await Product.findOne({ slug })
+    if (existingProduct) {
+      return {
+        status: 'error',
+        message: 'A product with this name already exists.',
+      }
+    }
+
+    const newProduct = await Product.create({
+      name,
+      description,
+      category,
+      priority,
+      image,
+      slug,
+      // Default values for other fields if not provided in FormData
+      pricePerKg: { amount: '', currency: 'USD' },
+      visibility: {
+        priceVisibility: false,
+        specificationVisibility: true,
+        descriptionVisibility: true,
+        productVisibility: true,
+      },
+      isFSSAICertified: false,
+      onePagerURL: '',
+      coaReportURL: '',
+    })
+
+    revalidatePath('/admin/products')
+
+    return {
+      status: 'success',
+      message: 'Product created successfully',
+      product: JSON.parse(JSON.stringify(newProduct)),
+    }
+  } catch (error: any) {
+    console.error('Create product error:', error)
+    return {
+      status: 'error',
+      message: error.message || 'An error occurred while creating the product',
+    }
+  }
+}
+
+export async function updateProduct(
+  productId: string,
+  formData: FormData
+): Promise<{
+  status: 'success' | 'error'
+  message: string
+  product?: any
+}> {
+  try {
+    await dbConnect()
+
+    const product = await Product.findById(productId)
+    if (!product) {
+      return {
+        status: 'error',
+        message: 'Product not found',
+      }
+    }
+
+    // Extract fields from FormData
+    const updateData: Partial<IProduct> = {}
+
+    const name = formData.get('name') as string
+    if (name) updateData.name = name
+
+    const description = formData.get('description') as string
+    if (description) updateData.description = description
+
+    const category = formData.get('category') as string
+    if (category) updateData.category = category
+
+    const priority = formData.get('priority') as string
+    if (priority) updateData.priority = parseInt(priority)
+
+    const image = formData.get('image') as string
+    if (image) updateData.image = image
+
+    const onePagerURL = formData.get('onePagerURL') as string
+    if (onePagerURL) updateData.onePagerURL = onePagerURL
+
+    const coaReportURL = formData.get('coaReportURL') as string
+    if (coaReportURL) updateData.coaReportURL = coaReportURL
+
+    const isFSSAICertified = formData.get('isFSSAICertified') === 'on'
+    updateData.isFSSAICertified = isFSSAICertified
+
+
+    // Handle nested pricePerKg
+    const priceAmount = formData.get('pricePerKg.amount') as string
+    const priceCurrency = formData.get('pricePerKg.currency') as string || 'USD'
+    updateData.pricePerKg = {
+        amount: priceAmount,
+        currency: priceCurrency
+    }
+
+    // Handle nested visibility
+    updateData.visibility = {
+        productVisibility: formData.get('productVisibility') === 'on',
+        priceVisibility: formData.get('priceVisibility') === 'on',
+        descriptionVisibility: formData.get('descriptionVisibility') === 'on',
+        specificationVisibility: formData.get('specificationVisibility') === 'on',
+    }
+
+    // Handle specifications
+    const specificationTitles = formData.getAll('specification.title[]') as string[]
+    const specificationValues = formData.getAll('specification.value[]') as string[]
+    if (specificationTitles && specificationValues && specificationTitles.length === specificationValues.length) {
+      updateData.specification = specificationTitles.map((title, index) => ({
+        title,
+        value: specificationValues[index],
+      }));
+    } else {
+        updateData.specification = []; // Clear or set to default if mismatch
+    }
+
+    // Handle slug regeneration if name changes
+    if (updateData.name && updateData.name !== product.name) {
+      const newSlug = slugify(updateData.name)
+      const existingProduct = await Product.findOne({ slug: newSlug })
+      if (existingProduct && existingProduct._id.toString() !== productId) {
+        return {
+          status: 'error',
+          message: 'A product with this name already exists.',
+        }
+      }
+      updateData.slug = newSlug
+    }
+
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    ).lean()
+
+    if (!updatedProduct) {
+      return {
+        status: 'error',
+        message: 'Failed to update product',
+      }
+    }
+
+    revalidatePath('/admin/products')
+    revalidatePath(`/products/${updatedProduct.slug}`)
+
+    return {
+      status: 'success',
+      message: 'Product updated successfully',
+      product: JSON.parse(JSON.stringify(updatedProduct)),
+    }
+  } catch (error: any) {
+    console.error('Update product error:', error)
+    return {
+      status: 'error',
+      message: error.message || 'An error occurred while updating the product',
+    }
+  }
+}
+
+export async function deleteProduct(productId: string): Promise<{
+  status: 'success' | 'error'
+  message: string
+}> {
+  try {
+    await dbConnect()
+
+    const deletedProduct = await Product.findByIdAndDelete(productId)
+
+    if (!deletedProduct) {
+      return {
+        status: 'error',
+        message: 'Product not found',
+      }
+    }
+
+    revalidatePath('/admin/products')
+
+    return {
+      status: 'success',
+      message: 'Product deleted successfully',
+    }
+  } catch (error: any) {
+    console.error('Delete product error:', error)
+    return {
+      status: 'error',
+      message: error.message || 'An error occurred while deleting the product',
     }
   }
 }
