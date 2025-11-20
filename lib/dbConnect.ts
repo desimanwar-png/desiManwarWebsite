@@ -20,7 +20,7 @@ async function dbConnect(): Promise<void> {
 
   try {
     const db = await mongoose.connect(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@desimanwar.umotqqw.mongodb.net/desiManwar?retryWrites=true&w=majority&appName=DesiManwar`
+      `mongodb+srv://${DB_USER}:${DB_PASS}@desimanwar.umotqqw.mongodb.net/desiManwar?retryWrites=true&w=majority&appName=DesiManwar`
     )
 
     connection.isConnected = db.connections[0].readyState
