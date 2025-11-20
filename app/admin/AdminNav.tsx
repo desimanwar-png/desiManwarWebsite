@@ -51,11 +51,6 @@ const navItems: NavItem[] = [
     icon: Box,
   },
   {
-    title: 'Categories',
-    url: '/admin/categories',
-    icon: LayoutGrid,
-  },
-  {
     title: 'Testimonials',
     url: '/admin/testimonials',
     icon: Star,
