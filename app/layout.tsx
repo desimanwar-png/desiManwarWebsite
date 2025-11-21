@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
+import { ThemeProvider } from '@/components/theme-provider'
+import FooterWrapper from './components/FooterWrapper'
+import NavbarWrapper from './components/NavbarWrapper'
 
 export const metadata: Metadata = {
   title: 'Desi Manwar',
@@ -10,14 +13,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="">
-        {children}
-        <Toaster richColors />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NavbarWrapper />
+          {children}
+          <Toaster richColors />
+          <FooterWrapper />
+        </ThemeProvider>
       </body>
     </html>
   )

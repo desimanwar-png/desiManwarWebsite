@@ -11,7 +11,9 @@ export async function getAllMembers(): Promise<{
 }> {
   try {
     await dbConnect()
-    const members = await Member.find({}).sort({ priority: 1, joiningDate: -1 }).lean()
+    const members = await Member.find({})
+      .sort({ priority: 1, joiningDate: -1 })
+      .lean()
     return {
       success: true,
       members: JSON.parse(JSON.stringify(members)),
@@ -46,9 +48,7 @@ export async function getMemberById(memberId: string): Promise<{
   }
 }
 
-export async function createMember(
-  data: Partial<IMember>
-): Promise<{
+export async function createMember(data: Partial<IMember>): Promise<{
   success: boolean
   message: string
   member?: any
@@ -134,6 +134,31 @@ export async function deleteMember(memberId: string): Promise<{
     return {
       success: false,
       message: error.message || 'An error occurred while deleting the member',
+    }
+  }
+}
+
+// Fetch top active members (default 4) sorted by priority and newest joining date
+export async function getTopMembers(limit: number = 4): Promise<{
+  success: boolean
+  members?: any[]
+  message?: string
+}> {
+  try {
+    await dbConnect()
+    const members = await Member.find({ isActive: true })
+      .sort({ priority: 1, joiningDate: -1 })
+      .limit(limit)
+      .lean()
+    return {
+      success: true,
+      members: JSON.parse(JSON.stringify(members)),
+    }
+  } catch (error) {
+    console.error('Get top members error:', error)
+    return {
+      success: false,
+      message: 'Failed to fetch top members',
     }
   }
 }

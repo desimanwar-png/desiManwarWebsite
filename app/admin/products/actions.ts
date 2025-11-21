@@ -32,6 +32,7 @@ export async function getAllProducts(): Promise<{
       products: products.map((product) => ({
         _id: product._id.toString(),
         name: product.name,
+        description: product.description,
         category: product.category,
         priority: product.priority,
         productVisibility: product.visibility.productVisibility,
@@ -78,9 +79,7 @@ export async function getProductById(productId: string): Promise<{
   }
 }
 
-export async function createProduct(
-  formData: FormData
-): Promise<{
+export async function createProduct(formData: FormData): Promise<{
   status: 'success' | 'error'
   message: string
   product?: any
@@ -192,33 +191,41 @@ export async function updateProduct(
     const isFSSAICertified = formData.get('isFSSAICertified') === 'on'
     updateData.isFSSAICertified = isFSSAICertified
 
-
     // Handle nested pricePerKg
     const priceAmount = formData.get('pricePerKg.amount') as string
-    const priceCurrency = formData.get('pricePerKg.currency') as string || 'USD'
+    const priceCurrency =
+      (formData.get('pricePerKg.currency') as string) || 'USD'
     updateData.pricePerKg = {
-        amount: priceAmount,
-        currency: priceCurrency
+      amount: priceAmount,
+      currency: priceCurrency,
     }
 
     // Handle nested visibility
     updateData.visibility = {
-        productVisibility: formData.get('productVisibility') === 'on',
-        priceVisibility: formData.get('priceVisibility') === 'on',
-        descriptionVisibility: formData.get('descriptionVisibility') === 'on',
-        specificationVisibility: formData.get('specificationVisibility') === 'on',
+      productVisibility: formData.get('productVisibility') === 'on',
+      priceVisibility: formData.get('priceVisibility') === 'on',
+      descriptionVisibility: formData.get('descriptionVisibility') === 'on',
+      specificationVisibility: formData.get('specificationVisibility') === 'on',
     }
 
     // Handle specifications
-    const specificationTitles = formData.getAll('specification.title[]') as string[]
-    const specificationValues = formData.getAll('specification.value[]') as string[]
-    if (specificationTitles && specificationValues && specificationTitles.length === specificationValues.length) {
+    const specificationTitles = formData.getAll(
+      'specification.title[]'
+    ) as string[]
+    const specificationValues = formData.getAll(
+      'specification.value[]'
+    ) as string[]
+    if (
+      specificationTitles &&
+      specificationValues &&
+      specificationTitles.length === specificationValues.length
+    ) {
       updateData.specification = specificationTitles.map((title, index) => ({
         title,
         value: specificationValues[index],
-      }));
+      }))
     } else {
-        updateData.specification = []; // Clear or set to default if mismatch
+      updateData.specification = [] // Clear or set to default if mismatch
     }
 
     // Handle slug regeneration if name changes
@@ -233,7 +240,6 @@ export async function updateProduct(
       }
       updateData.slug = newSlug
     }
-
 
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
