@@ -128,9 +128,12 @@ export default function TestimonialsPage() {
       toast.loading(`${isEditMode ? 'Updating' : 'Creating'} testimonial...`, {
         id: toastId,
       })
-      const result = isEditMode
-        ? await action(formData._id, formData)
-        : await action(formData)
+      let result;
+      if (isEditMode) {
+        result = await updateTestimonial(formData._id, formData);
+      } else {
+        result = await createTestimonial(formData);
+      }
       if (result.success) {
         toast.success(successMsg, { id: toastId })
         setIsSheetOpen(false)

@@ -27,8 +27,6 @@ export async function getAllProducts(): Promise<{
       .sort({ priority: 1, createdAt: -1 })
       .lean()
 
-    console.log('All product slugs from DB:', products.map(p => p.slug));
-
     return {
       status: 'success',
       products: products.map((product) => ({

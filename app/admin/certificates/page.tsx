@@ -121,9 +121,12 @@ export default function CertificatesPage() {
       toast.loading(`${isEditMode ? 'Updating' : 'Creating'} certificate...`, {
         id: toastId,
       })
-      const result = isEditMode
-        ? await action(formData._id, formData)
-        : await action(formData)
+      let result;
+      if (isEditMode) {
+        result = await updateCertificate(formData._id, formData);
+      } else {
+        result = await createCertificate(formData);
+      }
       if (result.success) {
         toast.success(successMsg, { id: toastId })
         setIsSheetOpen(false)

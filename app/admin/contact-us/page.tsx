@@ -120,9 +120,12 @@ export default function ContactUsPage() {
           id: toastId,
         }
       )
-      const result = isEditMode
-        ? await action(formData._id, formData)
-        : await action(formData)
+      let result;
+      if (isEditMode) {
+        result = await updateContactSubmission(formData._id, formData);
+      } else {
+        result = await createContactSubmission(formData);
+      }
       if (result.success) {
         toast.success(successMsg, { id: toastId })
         setIsSheetOpen(false)

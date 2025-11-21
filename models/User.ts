@@ -6,6 +6,8 @@ export interface IUser extends Document {
   email: string;
   password?: string; // Optional because we might not always want to return it
   isAdmin: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // Mongoose schema for the User
@@ -28,7 +30,7 @@ const userSchema: Schema<IUser> = new Schema({
     type: Boolean,
     default: false,
   },
-});
+}, { timestamps: true });
 
 // Export the model, handling the case where the model might already be compiled
 const User: Model<IUser> = models.User || model<IUser>('User', userSchema);

@@ -121,9 +121,12 @@ export default function QuotesPage() {
       toast.loading(`${isEditMode ? 'Updating' : 'Creating'} quote...`, {
         id: toastId,
       })
-      const result = isEditMode
-        ? await action(formData._id, formData)
-        : await action(formData)
+      let result;
+      if (isEditMode) {
+        result = await updateQuote(formData._id, formData);
+      } else {
+        result = await createQuote(formData);
+      }
       if (result.success) {
         toast.success(successMsg, { id: toastId })
         setIsSheetOpen(false)

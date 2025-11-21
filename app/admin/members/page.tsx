@@ -189,9 +189,12 @@ export default function MembersPage() {
         joiningDate: new Date(formData.joiningDate), // Convert to Date object
       }
 
-      const result = isEditMode
-        ? await action(formData._id, dataToSubmit)
-        : await action(dataToSubmit)
+      let result;
+      if (isEditMode) {
+        result = await updateMember(formData._id, dataToSubmit);
+      } else {
+        result = await createMember(dataToSubmit);
+      }
       if (result.success) {
         toast.success(successMsg, { id: toastId })
         setIsSheetOpen(false)
@@ -362,48 +365,40 @@ export default function MembersPage() {
                 <TabsContent value="social" className="space-y-4 pt-4">
                   <div className="space-y-2">
                     <Label htmlFor="fbURL">Facebook URL</Label>
-                    <Input
-                      id="fbURL"
-                      value={formData.fbURL}
-                      onChange={(e) =>
-                        setFormData({ ...formData, fbURL: e.target.value })
-                      }
-                      icon={<Facebook className="w-4 h-4 text-muted-foreground" />}
-                    />
-                  </div>
+                                          <Input
+                                            id="fbURL"
+                                            value={formData.fbURL}
+                                            onChange={(e) =>
+                                              setFormData({ ...formData, fbURL: e.target.value })
+                                            }
+                                          />                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="instaURL">Instagram URL</Label>
-                    <Input
-                      id="instaURL"
-                      value={formData.instaURL}
-                      onChange={(e) =>
-                        setFormData({ ...formData, instaURL: e.target.value })
-                      }
-                      icon={<Instagram className="w-4 h-4 text-muted-foreground" />}
-                    />
-                  </div>
+                                          <Input
+                                            id="instaURL"
+                                            value={formData.instaURL}
+                                            onChange={(e) =>
+                                              setFormData({ ...formData, instaURL: e.target.value })
+                                            }
+                                          />                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="twitterURL">Twitter URL</Label>
-                    <Input
-                      id="twitterURL"
-                      value={formData.twitterURL}
-                      onChange={(e) =>
-                        setFormData({ ...formData, twitterURL: e.target.value })
-                      }
-                      icon={<Twitter className="w-4 h-4 text-muted-foreground" />}
-                    />
-                  </div>
+                                          <Input
+                                            id="twitterURL"
+                                            value={formData.twitterURL}
+                                            onChange={(e) =>
+                                              setFormData({ ...formData, twitterURL: e.target.value })
+                                            }
+                                          />                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="linkedinURL">LinkedIn URL</Label>
-                    <Input
-                      id="linkedinURL"
-                      value={formData.linkedinURL}
-                      onChange={(e) =>
-                        setFormData({ ...formData, linkedinURL: e.target.value })
-                      }
-                      icon={<Linkedin className="w-4 h-4 text-muted-foreground" />}
-                    />
-                  </div>
+                                          <Input
+                                            id="linkedinURL"
+                                            value={formData.linkedinURL}
+                                            onChange={(e) =>
+                                              setFormData({ ...formData, linkedinURL: e.target.value })
+                                            }
+                                          />                  </div>
                 </TabsContent>
                 <TabsContent value="imageStatus" className="space-y-4 pt-4">
                   <div className="space-y-2">
