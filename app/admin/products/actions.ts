@@ -27,11 +27,14 @@ export async function getAllProducts(): Promise<{
       .sort({ priority: 1, createdAt: -1 })
       .lean()
 
+    console.log('All product slugs from DB:', products.map(p => p.slug));
+
     return {
       status: 'success',
       products: products.map((product) => ({
         _id: product._id.toString(),
         name: product.name,
+        slug: product.slug,
         description: product.description,
         category: product.category,
         priority: product.priority,
@@ -72,6 +75,36 @@ export async function getProductById(productId: string): Promise<{
     }
   } catch (error) {
     console.error(`Get product by id error: ${error}`)
+    return {
+      status: 'error',
+      message: 'Failed to fetch product',
+    }
+  }
+}
+
+export async function getProductBySlug(slug: string): Promise<{
+  status: 'success' | 'error'
+  product?: any
+  message?: string
+}> {
+  try {
+    await dbConnect()
+
+    const product = await Product.findOne({ slug }).lean()
+
+    if (!product) {
+      return {
+        status: 'error',
+        message: 'Product not found',
+      }
+    }
+
+    return {
+      status: 'success',
+      product: JSON.parse(JSON.stringify(product)),
+    }
+  } catch (error) {
+    console.error(`Get product by slug error: ${error}`)
     return {
       status: 'error',
       message: 'Failed to fetch product',
