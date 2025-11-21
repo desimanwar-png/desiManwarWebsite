@@ -6,9 +6,11 @@ import Image from 'next/image'
 import { Menu, X, Phone, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -62,19 +64,19 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-14">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative w-8 h-8 md:w-10 md:h-10">
+            <div className="relative w-10 h-10 rounded-full overflow-hidden">
               <Image
                 src="/images/logo-image-light.jpg"
                 alt="Desi Manwar Logo"
                 fill
-                className="object-contain dark:hidden"
+                className="object-cover dark:hidden"
                 priority
               />
               <Image
                 src="/images/logo-image-dark.jpg"
                 alt="Desi Manwar Logo"
                 fill
-                className="object-contain hidden dark:block"
+                className="object-cover hidden dark:block"
                 priority
               />
             </div>
@@ -89,7 +91,11 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className={`text-sm font-medium transition-colors ${
+                  pathname === link.href
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-primary'
+                }`}
               >
                 {link.label}
               </Link>
@@ -121,7 +127,11 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-primary py-2 px-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                  className={`text-sm font-medium py-2 px-2 rounded-md transition-colors ${
+                    pathname === link.href
+                      ? 'bg-accent text-accent-foreground'
+                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}

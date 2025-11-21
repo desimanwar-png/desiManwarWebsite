@@ -48,10 +48,12 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex gap-2">
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5 text-primary" />
-                <span>
-                  Plot no. 3, Park House, Infornt of Akashvani, M.I Road,
-                  Jaipur, Rajasthan 302001
-                </span>
+                <a href="https://www.google.com/maps/search/Plot+no.+3,+Park+House,+Infornt+of+Akashvani,+M.I+Road,+Jaipur,+Rajasthan+302001/@26.82394,75.7151575,10z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">
+                  <span>
+                    Plot no. 3, Park House, Infornt of Akashvani, M.I Road,
+                    Jaipur, Rajasthan 302001
+                  </span>
+                </a>
               </li>
               <li>
                 <a

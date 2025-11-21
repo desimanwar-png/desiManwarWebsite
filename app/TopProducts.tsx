@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, Package } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 export default async function TopProducts() {
   const result = await getAllProducts()
@@ -51,11 +52,11 @@ export default async function TopProducts() {
                     </div>
                   )}
                 </div>
-                <CardContent className="p-4 space-y-2">
+                <CardContent className="p-4 space-y-3">
                   <h3 className="text-lg font-semibold text-card-foreground">
                     {product.name}
                   </h3>
-                  <Badge variant="outline" className="text-xs font-medium">
+                  <Badge variant="secondary" className="text-xs font-medium">
                     {product.category}
                   </Badge>
                   {product.description && (
@@ -63,6 +64,11 @@ export default async function TopProducts() {
                       {product.description}
                     </p>
                   )}
+                  <Link href={`/products/${product.slug}`}>
+                    <Button variant="outline" className="w-full">
+                      View Details
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             ))}
